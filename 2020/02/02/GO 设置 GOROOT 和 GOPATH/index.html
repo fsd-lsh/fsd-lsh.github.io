@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
-    <title>关于Force's Blog</title>
+    <title>GO 设置 GOROOT 和 GOPATHForce's Blog</title>
     <link rel="shortcut icon" href="/images/favicon.ico">
     
     
@@ -109,18 +109,154 @@
             </header>
             
 <header class="blog-post-page-title">
-    <h4>关于</h4>
+    <h4>GO 设置 GOROOT 和 GOPATH</h4>
+    <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
+    
+    
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/GoLang/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">GoLang</a>
+    		
+        </span>
+	
+    
 </header>
 <div class="blog-main-post blog-post-page-box">
     <article class="blog-post-block blog-post-page-content">
         <section>
-            <p>这个站点是记录我日常工作时碰到的问题及解决办法的集合地，</p>
-<p>也是本人对技术热爱的精神领地！</p>
-<p>业余时间我会继续维护开源项目。</p>
-<p>欢迎相关行业博主互链！</p>
-
-        </section>     
+            
+                <p>go 里面有两个非常重要的环境变量 GOROOT 和 GOPATH，其中 GOROOT 是安装 go 的路径，而 GOPATH 是我们定义的自己的工作空间。</p><p>如果在安装的时候是一路 next 完的，那么默认就配置好了 ，无需手动配置。</p><p>如果在安装的时候修改了默认的安装路径，那么可能需要自己添加一下 。</p><p><span id="more-189"></span></p><ol><li>首先在环境变量中添加 GOPATH，值为 go 的安装目录：</li><li>然后在环境变量 PATH 中添加 go 安装目录下的 bin 文件夹。</li><li>接着添加一个环境变量 GOPATH，值为你自己希望的工作目录。</li><li>最后重启一下 命令行工具，输入 go env 命令即可查看：</li></ol><p>Tips:</p><p>一定要记得重启下命令行工具，cmd 或者 cmder 啥的，不然修改的环境变量没有生效，我一开始忘记了重启，纳闷半天为啥没生效。</p><p>原文：https://blog.csdn.net/xs20691718/article/details/78089163</p>
+            
+        </section>
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/GoLang/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">GoLang</a>
+				
+			
+		
+        </footer>
     </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
+			<a href="/2020/02/02/PHP%E4%B8%AD%E7%9A%84-%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%88abstract-class%EF%BC%89%E5%92%8C-%E6%8E%A5%E5%8F%A3%EF%BC%88interface%EF%BC%89/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="PHP中的 抽象类（abstract class）和 接口（interface）">上一篇</a>
+		
+
+		
+		
+			<a href="/2020/02/02/MYSQL%20%E8%A7%A3%E9%94%81%E4%B8%8E%E9%94%81%E8%A1%A8/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="MYSQL 解锁与锁表">下一篇</a>
+		
+
+        <div style="clear: both;"></div>
+    </article>
+
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
+            
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
+
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/GO%20%E8%AE%BE%E7%BD%AE%20GOROOT%20%E5%92%8C%20GOPATH/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
+    
 </div>
 
             

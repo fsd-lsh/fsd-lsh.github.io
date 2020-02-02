@@ -1,0 +1,530 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
+    <title>mysql json使用类型查询函数Force's Blog</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    
+    <link rel="stylesheet" href="/css/jquery.fancybox.css">
+    
+    <link rel="stylesheet" href="/css/nprogress.min.css">
+    
+    <link rel="stylesheet" href="/css/valine.css">
+    
+    <link rel="stylesheet" href="/css/life.css">
+    
+    
+
+    
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    
+    
+    
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    
+    <script src="https://cdn1.lncld.net/static/js/3.1.0/av-min.js"></script>
+    
+    <script src="/js/jquery.pjax.js"></script>
+    
+    <script src="/js/nprogress.min.js"></script>
+    
+    <script src="/js/tether.min.js"></script>
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    <script src="/js/highlight.min.js"></script>
+    
+    <script src="/js/highlightjs-line-numbers.min.js"></script>
+    
+    <script src="/js/jquery.fancybox.js"></script>
+    
+    <script src="/js/jquery.qrcode.min.js"></script>
+    
+    <script src="/js/Valine.min.js"></script>
+    
+    
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+<script>AV.init({appId: '', appKey: ''});</script>
+<script type="text/javascript">
+    var config = {
+        ClasS: 'Counter',
+        el: '.views',
+        elP: '.views-post'
+    }
+</script>
+<div class="container">
+    <div class="row blog-box-shadow">
+        <!--博客主栏开始-->
+        <div class="col-xl-9 col-lg-12 blog-main" id="pjax-box">
+            <header class="blog-header">
+                <a href="http://easybhu.cn" class="blog-header-mobile-title">Force's Blog</a>
+                <a href="javascript:;" class="blog-header-navbar-btn"><i class="fa fa-bars"></i></a>
+                <nav class="blog-header-navbar blog-header-fixed">
+                    <ul class="blog-navbar-links">
+                        
+                        <li class="blog-nav-item"><a href="/" class="transition">首页</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/about/" class="transition">关于</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/links/" class="transition">链接</a></li>
+                        
+                        <div class="blog-navbar-right">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="blog-header-search" placeholder="search...">
+                                    <buttn type="submit" class="blog-header-search-btn"><i class="fa fa-search"></i>
+                                    </buttn>
+                                </div>
+                            </form>
+                        </div>
+                    </ul>
+                </nav>
+            </header>
+            
+<header class="blog-post-page-title">
+    <h4>mysql json使用类型查询函数</h4>
+    <time datetime="2020-02-02T09:35:58.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
+    
+    
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/Mysql/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Mysql</a>
+    		
+    	       <a href="/categories/Mysql/Json/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Json</a>
+    		
+        </span>
+	
+    
+</header>
+<div class="blog-main-post blog-post-page-box">
+    <article class="blog-post-block blog-post-page-content">
+        <section>
+            
+                <h1>一,对记录的操作</h1><p>1.创建有json字段的表</p><div><pre>-- 创建表
+<pre><code>CREATE TABLE t_json(id INT PRIMARY KEY, sname VARCHAR(20) , info  JSON);</code></pre></pre></div><p>2.插入记录</p><div><pre>-- 插入含有json数组的记录
+<pre><code>INSERT INTO t_json(id,sname,info) VALUES( 1, 'name1', JSON_ARRAY(1, "abc", NULL, TRUE, CURTIME()));</code></pre>
+-- 插入含有json对象的记录
+<br></pre><div><pre><code>INSERT INTO t_json(id,sname,info) VALUES( 2, 'name2', JSON_OBJECT("age", 20, "time", now()));<br>INSERT INTO t_json(id,sname,info) VALUES( 3, 'name3', '{"age":20, "time":"2018-07-14 10:52:00"}');</code></pre></div></div><p>3.查询记录</p><div><pre>-- 查询记录
+<pre><code>SELECT sname,JSON_EXTRACT(info,'$.age') FROM t_json;<br>SELECT sname,info-&gt;'$.age' FROM t_json;</code></pre>-- 查询key
+<pre><code>SELECT id,json_keys(info) FROM t_json;</code></pre></pre></div><p>4.修改记录</p><div><pre>-- 增加键
+<pre><code>UPDATE t_json SET info = json_set(info,'$.ip','192.168.1.1') WHERE id = 2;</code></pre>-- 变更值
+<pre><code>UPDATE t_json SET info = json_set(info,'$.ip','192.168.1.2') WHERE id = 2;</code></pre>-- 删除键
+<pre><code>UPDATE t_json SET info = json_remove(info,'$.ip') WHERE id = 2;</code></pre></pre><div><br></div></div><h1>二,创建json值函数</h1><p>1.JSON_ARRAY 生成json数组</p><div><pre>-- JSON_ARRAY(val1,val2,val3...)
+-- 生成一个包含指定元素的json数组。
+<pre><code>SELECT JSON_ARRAY(1, "abc", NULL, TRUE, CURTIME()); -- [1, "abc", null, true, "10:37:08.000000"]</code></pre></pre></div><p>2.JSON_OBJECT 生成json对象</p><div><pre>-- JSON_OBJECT(key1,val1,key2,val2...)
+-- 生成一个包含指定K-V对的json object。如果有key为NULL或参数个数为奇数，则抛错。
+<pre><code>SELECT JSON_OBJECT('age', 20, 'time', now()); -- {"id": 87, "name": "carrot"}</code></pre></pre></div><p>3.JSON_QUOTE 加"号</p><div><pre>-- JSON_QUOTE(json_val)
+-- 将json_val用"号括起来。
+<pre><code>SELECT JSON_QUOTE('[1,2,3]'); -- "[1,2,3]"</code></pre></pre></div><h1>三,搜索json值函数</h1><p>1.JSON_CONTAINS 指定数据是否存在</p><div><pre>set @j = '{"a": 1, "b": 2, "c": {"d": 4}}';
+-- JSON_CONTAINS(json_doc, val[, path])
+-- 查询json文档是否在指定path包含指定的数据，包含则返回1，否则返回0。如果有参数为NULL或path不存在，则返回NULL。
+<pre><code>SELECT JSON_CONTAINS(@j, '4', '$.c.d'); -- 1</code></pre></pre></div><p>2.JSON_CONTAINS_PATH 指定路径是否存在</p><div><pre>-- JSON_CONTAINS_PATH(json_doc, one_or_all, path[, path] ...)
+-- 查询是否存在指定路径，存在则返回1，否则返回0。如果有参数为NULL，则返回NULL。
+-- one_or_all只能取值"one"或"all"，one表示只要有一个存在即可；all表示所有的都存在才行。
+<pre><code>SELECT JSON_CONTAINS_PATH(@j, 'one', '$.a', '$.e'); -- 1<br>SELECT JSON_CONTAINS_PATH(@j, 'all', '$.a', '$.c.d'); -- 1</code></pre></pre></div><p>3.JSON_EXTRACT 查找所有指定数据</p><div><pre>-- JSON_EXTRACT(json_doc, path[, path] ...)
+-- 从json文档里抽取数据。如果有参数有NULL或path不存在，则返回NULL。如果抽取出多个path，则返回的数据封闭在一个json array里。
+<pre><code>set @j2 = '[10, 20, [30, 40]]';<br>SELECT JSON_EXTRACT('[10, 20, [30, 40]]', '$[1]'); -- 20<br>SELECT JSON_EXTRACT('[10, 20, [30, 40]]', '$[1]', '$[0]'); -- [20, 10]<br>SELECT JSON_EXTRACT('[10, 20, [30, 40]]', '$[2][*]'); -- [30, 40]</code></pre></pre></div><p>4.JSON_KEYS 查找所有指定键值</p><div><pre>-- JSON_KEYS(json_doc[, path])
+-- 获取json文档在指定路径下的所有键值，返回一个json array。如果有参数为NULL或path不存在，则返回NULL。
+<pre><code>SELECT JSON_KEYS('{"a": 1, "b": {"c": 30}}'); -- ["a", "b"]<br>SELECT JSON_KEYS('{"a": 1, "b": {"c": 30}}', '$.b'); -- ["c"]<br>SELECT id,json_keys(info) FROM t_json;</code></pre></pre></div><p>5.JSON_SEARCH 查找所有指定值的位置</p><div><pre>-- JSON_SEARCH(json_doc, one_or_all, search_str[, escape_char[, path] ...])
+-- 查询包含指定字符串的paths，并作为一个json array返回。如果有参数为NUL或path不存在，则返回NULL。
+-- one_or_all："one"表示查询到一个即返回；"all"表示查询所有。
+-- search_str：要查询的字符串。 可以用LIKE里的'%'或‘_’匹配。
+-- path：在指定path下查。
+<pre><code>SET @j3 = '["abc", [{"k": "10"}, "def"], {"x":"abc"}, {"y":"bcd"}]';<br>SELECT JSON_SEARCH(@j3, 'one', 'abc'); -- "$[0]"<br>SELECT JSON_SEARCH(@j3, 'all', 'abc'); -- ["$[0]", "$[2].x"]<br>SELECT JSON_SEARCH(@j3, 'all', 'abc', NULL, '$[2]'); -- "$[2].x"<br>SELECT JSON_SEARCH(@j3, 'all', '10'); -- "$[1][0].k"<br>SELECT JSON_SEARCH(@j3, 'all', '%b%'); -- ["$[0]", "$[2].x", "$[3].y"]<br>SELECT JSON_SEARCH(@j3, 'all', '%b%', NULL, '$[2]'); -- "$[2].x"</code></pre></pre></div><h1>四,修改json值函数</h1><p>1.JSON_ARRAY_APPEND&nbsp; 指定位置追加数组元素</p><div><div><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></div><pre>-- JSON_ARRAY_APPEND(json_doc, path, val[, path, val] ...)
+-- 在指定path的json array尾部追加val。如果指定path是一个json object，则将其封装成一个json array再追加。如果有参数为NULL，则返回NULL。
+SET @j4 = '["a", ["b", "c"], "d"]';
+-- SELECT JSON_ARRAY_APPEND(@j4, '$[1][0]', 3); -- ["a", [["b", 3], "c"], "d"]
+<pre><code>SET @j5 = '{"a": 1, "b": [2, 3], "c": 4}';<br>SELECT JSON_ARRAY_APPEND(@j5, '$.b', 'x'); -- {"a": 1, "b": [2, 3, "x"], "c": 4} <br>SELECT JSON_ARRAY_APPEND(@j5, '$.c', 'y'); -- {"a": 1, "b": [2, 3], "c": [4, "y"]}<br>SELECT JSON_ARRAY_APPEND(@j5, '$', 'z'); -- [{"a": 1, "b": [2, 3], "c": 4}, "z"]</code></pre></pre></div><p>2.JSON_ARRAY_INSERT 指定位置插入数组元素</p><div><pre>-- JSON_ARRAY_INSERT(json_doc, path, val[, path, val] ...)
+-- 在path指定的json array元素插入val，原位置及以右的元素顺次右移。如果path指定的数据非json array元素，则略过此val；如果指定的元素下标超过json array的长度，则插入尾部。
+<pre><code>SET @j6 = '["a", {"b": [1, 2]}, [3, 4]]';<br>SELECT JSON_ARRAY_INSERT(@j6, '$[1]', 'x'); -- ["a", "x", {"b": [1, 2]}, [3, 4]]<br>SELECT JSON_ARRAY_INSERT(@j6, '$[100]', 'x'); -- ["a", {"b": [1, 2]}, [3, 4], "x"]<br>SELECT JSON_ARRAY_INSERT(@j6, '$[1].b[0]', 'x'); -- ["a", {"b": ["x", 1, 2]}, [3, 4]]<br>SELECT JSON_ARRAY_INSERT(@j6, '$[0]', 'x', '$[3][1]', 'y'); -- ["x", "a", {"b": [1, 2]}, [3, "y", 4]]</code></pre></pre></div><p>3.JSON_INSERT 指定位置插入</p><div><pre>-- JSON_INSERT(json_doc, path, val[, path, val] ...)
+-- 在指定path下插入数据，如果path已存在，则忽略此val（不存在才插入）。
+<pre><code>SET @j7 = '{ "a": 1, "b": [2, 3]}';<br>SELECT JSON_INSERT(@j7, '$.a', 10, '$.c', '[true, false]'); -- {"a": 1, "b": [2, 3], "c": "[true, false]"}</code></pre></pre></div><p>4.JSON_REPLACE 指定位置替换</p><div><pre>-- JSON_REPLACE(json_doc, path, val[, path, val] ...)
+-- 替换指定路径的数据，如果某个路径不存在则略过（存在才替换）。如果有参数为NULL，则返回NULL。
+<pre><code>SELECT JSON_REPLACE(@j7, '$.a', 10, '$.c', '[true, false]'); -- {"a": 10, "b": [2, 3]}</code></pre></pre></div><p>5.JSON_SET 指定位置设置</p><div><pre>-- JSON_SET(json_doc, path, val[, path, val] ...)
+-- 设置指定路径的数据（不管是否存在）。如果有参数为NULL，则返回NULL。
+<pre><code>SELECT JSON_SET(@j7, '$.a', 10, '$.c', '[true, false]'); -- {"a": 10, "b": [2, 3], "c": "[true, false]"}</code></pre></pre></div><p>6.JSON_MERGE 合并</p><div><pre>-- JSON_MERGE(json_doc, json_doc[, json_doc] ...)
+-- merge多个json文档。规则如下：
+-- 如果都是json array，则结果自动merge为一个json array；
+-- 如果都是json object，则结果自动merge为一个json object；
+-- 如果有多种类型，则将非json array的元素封装成json array再按照规则一进行mege。
+<pre><code>SELECT JSON_MERGE('[1, 2]', '[true, false]'); -- [1, 2, true, false]<br>SELECT JSON_MERGE('{"name": "x"}', '{"id": 47}'); -- {"id": 47, "name": "x"}<br>SELECT JSON_MERGE('1', 'true'); -- [1, true]<br>SELECT JSON_MERGE('[1, 2]', '{"id": 47}'); -- [1, 2, {"id": 47}]</code></pre></pre></div><p>7.JSON_REMOVE 指定位置移除</p><div><pre>-- JSON_REMOVE(json_doc, path[, path] ...)
+-- 移除指定路径的数据，如果某个路径不存在则略过此路径。如果有参数为NULL，则返回NULL。
+<pre><code>SET @j8 = '["a", ["b", "c"], "d"]';<br>SELECT JSON_REMOVE(@j8, '$[1]'); -- ["a", "d"]</code></pre></pre></div><p>8.JSON_UNQUOTE 去"号</p><div><pre>-- JSON_UNQUOTE(val)
+-- 去掉val的引号。如果val为NULL，则返回NULL。
+<pre><code>SELECT JSON_UNQUOTE("\"123\""); -- 123</code></pre></pre></div><h1>五,返回json值属性的函数</h1><p>1.JSON_DEPTH 深度</p><div><pre>-- JSON_DEPTH(json_doc)
+-- 获取json文档的深度。如果参数为NULL，则返回NULL。
+-- 空的json array、json object或标量的深度为1。
+<pre><code>SELECT JSON_DEPTH('{}'), JSON_DEPTH('[]'), JSON_DEPTH('true'); -- 1 1 1<br>SELECT JSON_DEPTH('[10, 20]'), JSON_DEPTH('[[], {}]'); -- 2 2<br>SELECT JSON_DEPTH('[10, {"a": 20}]'); -- 3</code></pre></pre></div><p>2.JSON_LENGTH 长度</p><div><pre>-- JSON_LENGTH(json_doc[, path])
+-- 获取指定路径下的长度。如果参数为NULL，则返回NULL。　
+-- 长度的计算规则：
+-- 标量的长度为1；
+-- json array的长度为元素的个数；
+-- json object的长度为key的个数。
+<pre><code>SELECT JSON_LENGTH('[1, 2, {"a": 3}]'); -- 3<br>SELECT JSON_LENGTH('{"a": 1, "b": {"c": 30}}'); -- 2<br>SELECT JSON_LENGTH('{"a": 1, "b": {"c": 30}}', '$.b'); -- 1</code></pre></pre></div><p>3.JSON_TYPE 类型</p><div><pre>-- JSON_TYPE(json_val)
+-- 获取json文档的具体类型。如果参数为NULL，则返回NULL。
+<pre><code>select JSON_TYPE('[1,2]'); -- ARRAY</code></pre></pre></div><p>4.JSON_VALID 是否有效json格式</p><div><pre>-- JSON_VALID(val)
+-- 判断val是否为有效的json格式，是为1，不是为0。如果参数为NUL，则返回NULL。
+<pre><code>SELECT JSON_VALID('{"a": 1}'); -- 1<br>SELECT JSON_VALID('hello'), JSON_VALID('"hello"'); -- 1</code></pre></pre></div><p>附录:</p><div><pre>JSON_ARRAY 生成json数组
+JSON_OBJECT 生成json对象
+JSON_QUOTE 加"号
+JSON_CONTAINS 指定数据是否存在
+JSON_CONTAINS_PATH 指定路径是否存在
+JSON_EXTRACT 查找所有指定数据
+JSON_KEYS 查找所有指定键值
+JSON_SEARCH 查找所有指定值的位置
+JSON_ARRAY_APPEND  指定位置追加数组元素
+JSON_ARRAY_INSERT 指定位置插入数组元素
+JSON_INSERT 指定位置插入
+JSON_REPLACE 指定位置替换
+JSON_SET 指定位置设置
+JSON_MERGE 合并
+JSON_REMOVE 指定位置移除
+JSON_UNQUOTE 去"号
+JSON_DEPTH 深度
+JSON_LENGTH 长度
+JSON_TYPE 类型
+JSON_VALID 是否有效json格式</pre></div><p>&nbsp;</p><table summary="A reference that lists all JSON functions." frame="box" rules="all"><thead><tr><th scope="col">函数名</th><th scope="col">描述</th></tr></thead><tbody><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-append" target="_blank" rel="noopener"><code>JSON_APPEND()</code></a>（废弃的5.7.9）</td><td>JSON文件追加数据</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html#function_json-array" target="_blank" rel="noopener"><code>JSON_ARRAY()</code></a></td><td>创建JSON数组</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-array-append" target="_blank" rel="noopener"><code>JSON_ARRAY_APPEND()</code></a></td><td>JSON文件追加数据</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-array-insert" target="_blank" rel="noopener"><code>JSON_ARRAY_INSERT()</code></a></td><td>插入JSON数组</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#operator_json-column-path" target="_blank" rel="noopener"><code>-&gt;</code></a></td><td>在评估路径返回JSON列值；相当于json_extract()。</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-contains" target="_blank" rel="noopener"><code>JSON_CONTAINS()</code></a></td><td>是否包含特定对象的JSON文档路径</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-contains-path" target="_blank" rel="noopener"><code>JSON_CONTAINS_PATH()</code></a></td><td>无论是JSON文件包含任何数据路径</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-attribute-functions.html#function_json-depth" target="_blank" rel="noopener"><code>JSON_DEPTH()</code></a></td><td>JSON文档的最大深度</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-extract" target="_blank" rel="noopener"><code>JSON_EXTRACT()</code></a></td><td>从JSON文档返回数据</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#operator_json-inline-path" target="_blank" rel="noopener"><code>-&gt;&gt;</code></a></td><td>在评估路径和结束引语结果返回JSON列值；相当于json_unquote（json_extract()）。</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-insert" target="_blank" rel="noopener"><code>JSON_INSERT()</code></a></td><td>将数据插入到JSON文档</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-keys" target="_blank" rel="noopener"><code>JSON_KEYS()</code></a></td><td>从JSON文件密钥数组</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-attribute-functions.html#function_json-length" target="_blank" rel="noopener"><code>JSON_LENGTH()</code></a></td><td>在JSON文档中的元素数</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-merge" target="_blank" rel="noopener"><code>JSON_MERGE()</code></a>（废弃的5.7.22）</td><td>合并的JSON文件，保存重复键。不json_merge_preserve()的同义词</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-merge-patch" target="_blank" rel="noopener"><code>JSON_MERGE_PATCH()</code></a></td><td>合并的JSON文件，免去重复键的值</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-merge-preserve" target="_blank" rel="noopener"><code>JSON_MERGE_PRESERVE()</code></a></td><td>合并的JSON文件，保存重复键</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html#function_json-object" target="_blank" rel="noopener"><code>JSON_OBJECT()</code></a></td><td>创建JSON对象</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-utility-functions.html#function_json-pretty" target="_blank" rel="noopener"><code>JSON_PRETTY()</code></a></td><td>版画在人类可读的格式JSON文档，每个数组元素或对象成员打印在新的行中，缩进两个空格就其母。</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-creation-functions.html#function_json-quote" target="_blank" rel="noopener"><code>JSON_QUOTE()</code></a></td><td>引用JSON文档</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-remove" target="_blank" rel="noopener"><code>JSON_REMOVE()</code></a></td><td>从JSON文件中删除数据</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-replace" target="_blank" rel="noopener"><code>JSON_REPLACE()</code></a></td><td>在JSON文件的值替换</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-search" target="_blank" rel="noopener"><code>JSON_SEARCH()</code></a></td><td>在JSON文件价值路径</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-set" target="_blank" rel="noopener"><code>JSON_SET()</code></a></td><td>将数据插入到JSON文档</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-utility-functions.html#function_json-storage-size" target="_blank" rel="noopener"><code>JSON_STORAGE_SIZE()</code></a></td><td>用于一个JSON文件的二进制表示形式存储空间；一个JSON柱，空间时使用的文档插入到任何部分更新之前，</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-attribute-functions.html#function_json-type" target="_blank" rel="noopener"><code>JSON_TYPE()</code></a></td><td>JSON值类型</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-modification-functions.html#function_json-unquote" target="_blank" rel="noopener"><code>JSON_UNQUOTE()</code></a></td><td>JSON值而言</td></tr><tr><td scope="row"><a href="https://dev.mysql.com/doc/refman/5.7/en/json-attribute-functions.html#function_json-valid" target="_blank" rel="noopener"><code>JSON_VALID()</code></a></td><td>JSON值是否是有效的</td></tr></tbody></table>
+
+            
+        </section>
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/Mysql/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Mysql</a>
+				
+			<a href="/tags/Json/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Json</a>
+				
+			
+		
+        </footer>
+    </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
+			<a href="/2020/02/02/MySQL%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%AE%B9%E9%87%8F%E5%A4%A7%E5%B0%8F/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="MySQL查看数据库表容量大小">上一篇</a>
+		
+
+		
+		
+			<a href="/2020/02/02/PHP%E4%B8%AD%E7%9A%84-%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%88abstract-class%EF%BC%89%E5%92%8C-%E6%8E%A5%E5%8F%A3%EF%BC%88interface%EF%BC%89/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="PHP中的 抽象类（abstract class）和 接口（interface）">下一篇</a>
+		
+
+        <div style="clear: both;"></div>
+    </article>
+
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
+            
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
+
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/mysql-json%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
+    
+</div>
+
+            
+            <footer class="blog-footer">
+                <p class="blog-footer-left">Copyright ©  2020 <a
+                        href="http://easybhu.cn">Force's Blog</a></p>
+                <p class="blog-footer-right">Powered by <a href="https://hexo.io" target="_blank">Hexo</a></p>
+            </footer>
+        </div><!--博客主栏结束-->
+        <!--博客侧边栏开始-->
+        <div class="col-xl-3 blog-sidebar">
+            <div class="blog-sidebar-title">
+                <a href="">Force's Blog</a>
+            </div>
+            <div class="blog-sidebar-logo">
+                <img src="/images/avatar.jpg">
+            </div>
+            <div class="blog-sidebar-count blog-sidebar-padding">
+                <div class="blog-sidebar-count-left">
+                    <p class="blog-sidebar-count-p">14</p>
+                    <span class="blog-sidebar-count-span">文章</span>
+                </div>
+                <div class="blog-sidebar-count-right">
+                    <p class="blog-sidebar-count-p">12</p>
+                    <span class="blog-sidebar-count-span">标签</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="blog-sidebar-icon blog-sidebar-padding">
+                <ul>
+                    <li><a href="https://github.com/fsd-lsh" class="icon-github" target="_blank" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://weibo.com/hanshusu" class="icon-weibo" target="_blank" data-toggle="tooltip" data-placement="top" title="新浪微博"><i class="fa fa-weibo"></i></a></li>
+                    <li><a href="mailto:lisihan@outlook.com" class="icon-email" data-toggle="tooltip" data-placement="top" title="E-Mail"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://twitter.com/LisihanSever" class="icon-twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <!--<li><a href="" class="icon-facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="FaceBook"><i class="fa fa-facebook"></i></a></li>-->
+                    <!--<li><a href="" class="icon-rss" data-toggle="tooltip" target="_blank" data-placement="top" title="RSS"><i class="fa fa-rss"></i></a></li>-->
+                </ul>
+            </div>
+            <div class="blog-sidebar-categories">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-folder-open"></i>&nbsp;文章分类</h4>
+                <ul class="list-group blog-sidebar-padding">
+                    
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/GoLang/">GoLang</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/">Mysql</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Php/">Php</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/JavaScript/">JavaScript</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/RESTful/">RESTful</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/Json/">Json</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Windows/">Windows</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/hexo/">hexo</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Html/">Html</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="blog-sidebar-tags">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-tag"></i>&nbsp;标签云</h4>
+                <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
+                    
+                    
+                    <li><a href="/tags/GoLang/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="GoLang">GoLang</a></li>
+                    
+                    <li><a href="/tags/Mysql/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Mysql">Mysql</a></li>
+                    
+                    <li><a href="/tags/Php/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Php">Php</a></li>
+                    
+                    <li><a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="抽象类">抽象类</a></li>
+                    
+                    <li><a href="/tags/JavaScript/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="JavaScript">JavaScript</a></li>
+                    
+                    <li><a href="/tags/Js/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Js">Js</a></li>
+                    
+                    <li><a href="/tags/RESTful/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="RESTful">RESTful</a></li>
+                    
+                    <li><a href="/tags/Json/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Json">Json</a></li>
+                    
+                    <li><a href="/tags/Windows/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Windows">Windows</a></li>
+                    
+                    <li><a href="/tags/Hexo/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Hexo">Hexo</a></li>
+                    
+                    <li><a href="/tags/Blog/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Blog">Blog</a></li>
+                    
+                    <li><a href="/tags/Html/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Html">Html</a></li>
+                    
+                    
+                </ul>
+            </div>
+            <script>
+                // 博客侧栏标签云随机色
+                var tag_cloud = $('.tag-could');
+                tag_cloud.each(function () {
+                    var Cnum = 9;
+                    var Crand = parseInt(Math.random() * Cnum);
+                    $(this).addClass("tag-could" + Crand);
+                })
+            </script>
+            <!--返回顶部按钮-->
+            <div class="retop">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </div><!--博客侧边栏结束-->
+    </div>
+</div>
+<script src="/js/LeanStatistics.min.js"></script>
+<script src="/js/myLife.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+    otherF();
+    LeanStatistics();
+    $(document).pjax('a', '#pjax-box', {fragment: '#pjax-box', timeout: 8000}).on('pjax:complete', function () {
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        })
+        $('code.hljs').each(function (i, block) {
+            hljs.lineNumbersBlock(block);
+        });
+        LeanStatistics();
+    }).on('pjax:start', function () {
+        NProgress.start();
+    }).on('pjax:end', function () {
+        NProgress.done();
+        otherF();
+    });
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?1fbc1ca8ae02957dc68abed2e0906f03";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

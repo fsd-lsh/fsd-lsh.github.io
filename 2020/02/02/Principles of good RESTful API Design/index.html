@@ -1,0 +1,450 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
+    <title>Principles of good RESTful API DesignForce's Blog</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    
+    <link rel="stylesheet" href="/css/jquery.fancybox.css">
+    
+    <link rel="stylesheet" href="/css/nprogress.min.css">
+    
+    <link rel="stylesheet" href="/css/valine.css">
+    
+    <link rel="stylesheet" href="/css/life.css">
+    
+    
+
+    
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    
+    
+    
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    
+    <script src="https://cdn1.lncld.net/static/js/3.1.0/av-min.js"></script>
+    
+    <script src="/js/jquery.pjax.js"></script>
+    
+    <script src="/js/nprogress.min.js"></script>
+    
+    <script src="/js/tether.min.js"></script>
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    <script src="/js/highlight.min.js"></script>
+    
+    <script src="/js/highlightjs-line-numbers.min.js"></script>
+    
+    <script src="/js/jquery.fancybox.js"></script>
+    
+    <script src="/js/jquery.qrcode.min.js"></script>
+    
+    <script src="/js/Valine.min.js"></script>
+    
+    
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+<script>AV.init({appId: '', appKey: ''});</script>
+<script type="text/javascript">
+    var config = {
+        ClasS: 'Counter',
+        el: '.views',
+        elP: '.views-post'
+    }
+</script>
+<div class="container">
+    <div class="row blog-box-shadow">
+        <!--博客主栏开始-->
+        <div class="col-xl-9 col-lg-12 blog-main" id="pjax-box">
+            <header class="blog-header">
+                <a href="http://easybhu.cn" class="blog-header-mobile-title">Force's Blog</a>
+                <a href="javascript:;" class="blog-header-navbar-btn"><i class="fa fa-bars"></i></a>
+                <nav class="blog-header-navbar blog-header-fixed">
+                    <ul class="blog-navbar-links">
+                        
+                        <li class="blog-nav-item"><a href="/" class="transition">首页</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/about/" class="transition">关于</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/links/" class="transition">链接</a></li>
+                        
+                        <div class="blog-navbar-right">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="blog-header-search" placeholder="search...">
+                                    <buttn type="submit" class="blog-header-search-btn"><i class="fa fa-search"></i>
+                                    </buttn>
+                                </div>
+                            </form>
+                        </div>
+                    </ul>
+                </nav>
+            </header>
+            
+<header class="blog-post-page-title">
+    <h4>Principles of good RESTful API Design</h4>
+    <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
+    
+    
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/RESTful/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">RESTful</a>
+    		
+        </span>
+	
+    
+</header>
+<div class="blog-main-post blog-post-page-box">
+    <article class="blog-post-block blog-post-page-content">
+        <section>
+            
+                <p>Please Write Article</p><p>Good restful API design is hard! An API represents a contract between you and those who Consume your data. Breaking this contract will result in many angry emails, and a slew of sad users with mobile apps which no longer work. Documentation is half the battle, and it is very difficult to find programmer who also likes to write.</p><p>Building an API is one of the most important things you can do to increase the value of your service. By having an API, your service / core application has the potential to become a platform from which other services grow. Look at the current huge tech companies: Facebook, Twitter, Google, GitHub, Amazon, Netflix… None of them would be nearly as big as they are today if they hadn’t opened up their data via API. In fact, an entire industry exists with the sole purpose of consuming data provided by said platforms.</p><blockquote><p>The easier your API is to consume, the more people that will consume it.</p></blockquote><p>The principles of this document, if followed closely when designing your API, will ensure that Consumers of your API will be able to understand what is going on, and should drastically reduce the number of confused and/or angry emails you receive. I’ve organized everything into topics, which don’t necessarily need to be read in order.</p><p><span id="more-174"></span></p><h3 id="restful-api-design-definitions">RESTful API Design Definitions</h3><p>Here’s a few of the important terms I will use throughout the course of this document:</p><ul><li><strong>Resource</strong>: A single instance of an object. For example, an animal.</li><li><strong>Collection</strong>: A collection of homogeneous objects. For example, animals.</li><li><strong>HTTP</strong>: A protocol for communicating over a network.</li><li><strong>Consumer</strong>: A client computer application capable of making HTTP requests.</li><li><strong>Third Party Developer</strong>: A developer not a part of your project but who wishes to consume your data.</li><li><strong>Server</strong>: An HTTP server/application accessible from a Consumer over a network.</li><li><strong>Endpoint</strong>: An API URL on a Server which represents either a Resource or an entire Collection.</li><li><strong>Idempotent</strong>: Side-effect free, can happen multiple times without penalty.</li><li><strong>URL Segment</strong>: A slash-separated piece of information in the URL.</li></ul><h3 id=">Data Design and Abstraction</h3><p>Planning how your API will look begins earlier than you’d think; first you need to decide how your data will be designed and how your core service / application will work. If you’re doing&nbsp;<a href=" http:="" blog.pop.co="" post="" 67465239611="" why-we-chose-api-first-development"="">API First Development&nbsp;this should be easy. If you’re attaching an API to an existing project, you may need to provide more abstraction.<p></p><p>Occasionally, a Collection can represent a database table, and a Resource can represent a row within that table. However, this is not the usual case. In fact, your API should abstract away as much of your data and business logic as possible. It is very important that you don’t overwhelm Third-Party Developers with any complex application data, if you do they won’t want to use your API.</p><p>There are also many parts of your service which you SHOULD NOT expose via API at all. A common example is that many APIs will not allow third parties to create users.</p></h3><h3 id="verbs">Verbs</h3><p>Surely you know about GET and POST requests. These are the two most commonly requests used when your browser visits different webpages. The term POST is so popular that it has even invaded common language, where people who know nothing about how the Internet works do know they can “post” something on a friends Facebook wall.</p><p>There are four and a half very important HTTP verbs that you need to know about. I say “and a half”, because the PATCH verb is very similar to the PUT verb, and two two are often combined by many an API developer. Here are the verbs, and next to them are their associated database call (I’m assuming most people reading this know more about writing to a database than designing an API).</p><ul><li><strong>GET</strong>&nbsp;(SELECT): Retrieve a specific Resource from the Server, or a listing of Resources.</li><li><strong>POST</strong>&nbsp;(CREATE): Create a new Resource on the Server.</li><li><strong>PUT</strong>&nbsp;(UPDATE): Update a Resource on the Server, providing the entire Resource.</li><li><strong>PATCH</strong>&nbsp;(UPDATE): Update a Resource on the Server, providing only changed attributes.</li><li><strong>DELETE</strong>&nbsp;(DELETE): Remove a Resource from the Server.</li></ul><p>Here are two lesser known HTTP verbs:</p><ul><li><strong>HEAD</strong>&nbsp;– Retrieve meta data about a Resource, such as a hash of the data or when it was last updated.</li><li><strong>OPTIONS</strong>&nbsp;– Retrieve information about what the Consumer is allowed to do with the Resource.</li></ul><p>A good RESTful API will make use of the four and a half HTTP verbs for allowing third parties to interact with its data, and will never include actions / verbs as URL segments.</p><p>Typically, GET requests can be cached (and often are!) Browsers, for example, will cache GET requests (depending on cache headers), and will go as far as prompt the user if they attempt to POST for a second time. A HEAD request is basically a GET without the response body, and can be cached as well.</p><h3 id="versioning">Versioning</h3><p>No matter what you are building, no matter how much planning you do beforehand, your core application is going to change, your data relationships will change, attributes will invariably be added and removed from your Resources. This is just how software development works, and is especially true if your project is alive and used by many people (which is likely the case if you’re building an API).</p><p>Remember than an API is a published contract between a Server and a Consumer. If you make changes to the Servers API and these changes break backwards compatibility, you will break things for your Consumer and they will resent you for it. Do it enough, and they will leave. To ensure your application evolves AND you keep your Consumers happy, you need to occasionally introduce new versions of the API while still allowing old versions to be accessible.</p><p>As a side note, if you are simply ADDING new features to your API, such as new attributes on a Resource (which are not required and the Resource will function without), or if you are ADDING new Endpoints, you do not need to increment your API version number since these changes do not break backwards compatibility. You will want to update your API Documentation (your Contract), of course.</p><p>Over time you can deprecate old versions of the API. To deprecate a feature doesn’t mean to shut if off or diminish the quality of it, but to tell Consumers of your API that the older version will be removed on a specific date and that they should upgrade to a newer version.</p><p>A good RESTful API design will keep track of the version in the URL. The other most common solution is to put a version number in a request header, but after working with many different Third Party Developers, I can tell you that adding headers is no where near as easy as adding a URL Segment.</p><h3 id="span-style-font-size-1-17em-line-height-1-5em-analytics-span">Analytics</h3><p>Keep track of the version/endpoints of your API being used by Consumers. This can be as simple as incrementing an integer in a database each time a request is made. There are many reasons that keeping track of API Analytics is a good idea, for example, the most commonly used API calls should be made efficient.</p><p>For the purposes of building an API which Third Party Developers will love, the most important thing is that when you do deprecate a version of your API, you can actually contact developers using deprecated API features. This is the perfect way to remind them to upgrade before you kill the old API version.</p><p>The process of Third Party Developer notification can be automated, e.g. mail the developer every time 10,000 requests to a deprecated feature are made.</p><h3 id="api-root-url">API Root URL</h3><p>The root location of your API is important, believe it or not. When a developer (read as code archaeologist) inherits an old project using your API and needs to build new features, they may not know about your service at all. Perhaps all they know is a list of URLs which the Consumer calls out to. It’s important that the root entry point into your API is as simple as possible, as a long complex URL will appear daunting and can turn developers away.</p><p>Here are two common URL Roots:</p><ul><li><a href="https://example.org/api/v1/*" target="_blank" rel="noopener">https://example.org/api/v1/*</a></li><li><a href="https://api.example.com/v1/*" target="_blank" rel="noopener">https://api.example.com/v1/*</a></li></ul><p>If your application is huge, or you anticipate it becoming huge, putting the API on its own subdomain (e.g.&nbsp;<strong>api.</strong>) is a good choice. This can allow for some more flexible scalability down the road.</p><p>If you anticipate your API will never grow to be that large, or you want a much simpler application setup (e.g. you want to host the website AND API from the same framework), placing your API beneath a URL segment at the root of the domain (e.g.&nbsp;<strong>/api/</strong>) works as well.</p><p>It’s a good idea to have content at the root of your API. Hitting the root of GitHub’s API returns a listing of endpoints, for example. Personally, I’m a fan of having the root URL give information which a lost developer would find useful, e.g., how to get to the developer documentation for the API.</p><p>Also, notice the HTTPS prefix. As a good RESTful API, you must host your API behind HTTPS.</p><h3 id="endpoints">Endpoints</h3><p>An Endpoint is a URL within your API which points to a specific Resource or a Collection of Resources.</p><p>If you were building a fictional API to represent several different Zoo’s, each containing many Animals (with an animal belonging to exactly one Zoo), employees (who can work at multiple zoos) and keeping track of the species of each animal, you might have the following endpoints:</p><ul><li><a href="https://api.example.com/v1/**zoos**" target="_blank" rel="noopener">https://api.example.com/v1/**zoos**</a></li><li><a href="https://api.example.com/v1/**animals**" target="_blank" rel="noopener">https://api.example.com/v1/**animals**</a></li><li><a href="https://api.example.com/v1/**animal_types**" target="_blank" rel="noopener">https://api.example.com/v1/**animal_types**</a></li><li><a href="https://api.example.com/v1/**employees**" target="_blank" rel="noopener">https://api.example.com/v1/**employees**</a></li></ul><p>When referring to what each endpoint can do, you’ll want to list valid HTTP Verb and Endpoint combinations. For example, here’s a semi-comprehensive list of actions one can perform with our fictional API. Notice that I’ve preceded each endpoint with the HTTP Verb, as this is the same notation used within an HTTP Request header.</p><ul><li>GET /zoos: List all Zoos (ID and Name, not too much detail)</li><li>POST /zoos: Create a new Zoo</li><li>GET /zoos/ZID: Retrieve an entire Zoo object</li><li>PUT /zoos/ZID: Update a Zoo (entire object)</li><li>PATCH /zoos/ZID: Update a Zoo (partial object)</li><li>DELETE /zoos/ZID: Delete a Zoo</li><li>GET /zoos/ZID/animals: Retrieve a listing of Animals (ID and Name).</li><li>GET /animals: List all Animals (ID and Name).</li><li>POST /animals: Create a new Animal</li><li>GET /animals/AID: Retrieve an Animal object</li><li>PUT /animals/AID: Update an Animal (entire object)</li><li>PATCH /animals/AID: Update an Animal (partial object)</li><li>GET /animal_types: Retrieve a listing (ID and Name) of all Animal Types</li><li>GET /animal_types/ATID: Retrieve an entire Animal Type object</li><li>GET /employees: Retrieve an entire list of Employees</li><li>GET /employees/EID: Retreive a specific Employee</li><li>GET /zoos/ZID/employees: Retrieve a listing of Employees (ID and Name) who work at this Zoo</li><li>POST /employees: Create a new Employee</li><li>POST /zoos/ZID/employees: Hire an Employee at a specific Zoo</li><li>DELETE /zoos/ZID/employees/EID: Fire an Employee from a specific Zoo</li></ul><p>In the above list, ZID means Zoo ID, AID means Animal ID, EID means Employee ID, and ATID means Animal Type ID. Having a key in your documentation for whatever convention you choose is a good idea.</p><p>I’ve left out the common API URL prefix in the above examples for brevity. While this can be fine during communications, in your actual API documentation, you should always display the full URL to each endpoint (e.g. GET&nbsp;<a href="http://api.example.com/v1/animal_type/ATID" target="_blank" rel="noopener">http://api.example.com/v1/animal_type/ATID</a>).</p><p>Notice how the relationships between data is displayed, specifically the many to many relationships between employees and zoos. By adding an additional URL segment, one can perform more specific interactions. Of course there is no HTTP verb for “FIRE”-ing an employee, but by performing a DELETE on an Employee located within a Zoo, we’re able to achieve the same effect.</p><h3 id="filtering">Filtering</h3><p>When a Consumer makes a request for a listing of objects, it is important that you give them a list of every single object matching the requested criteria. This list could be massive. But, it is important that you don’t perform any arbitrary limitations of the data. It is these arbitrary limits which make it hard for a third party developer to know what is going on.&nbsp;If they request a certain Collection, and iterate over the results, and they never see more than 100 items, it is now their job to figure out where this limit is coming from. Is their ORM buggy and limiting items to 100? Is the network chopping up large packets?</p><blockquote><p>Minimize the arbitrary limits imposed on Third Party Developers.</p></blockquote><p>It is important, however, that you do offer the ability for a Consumer to specify some sort of filtering/limitation of the results. The most important reason for this is that the network activity is minimal and the Consumer gets their results back as soon as possible. The second most important reason for this is the Consumer may be lazy, and if the Server can do filtering and pagination for them, all the better. The not-so-important reason (from the Consumers perspective), yet a great benefit for the Server, is that the request will be less resource heavy.</p><p>Filtering is mostly useful for performing GETs on Collections of resources. Since these are GET requests, filtering information should be passed via the URL. Here are some examples of the types of filtering you could conceivably add to your API:</p><ul><li>?limit=10: Reduce the number of results returned to the Consumer (for Pagination)</li><li>?offset=10: Send sets of information to the Consumer (for Pagination)</li><li>?animal_type_id=1: Filter records which match the following condition (WHERE animal_type_id = 1)</li><li>?sortby=name&amp;order=asc: Sort the results based on the specified attribute (ORDER BY `name` ASC)</li></ul><p>Some of these filterings can be redundant with endpoint URLS. For example I previously mentioned GET /zoo/ZID/animals. This would be the same thing as GET /animals?zoo_id=ZID. Dedicated endpoints being made available to the Consumer will make their lives easier, this is especially true with requests you anticipate they will make a lot. In the documentation, mention this redundancy so that Third Party Developers aren’t left wondering if differences exist.</p><p>Also, this goes without saying, but whenever you perform filtering or sorting of data, make sure you white-list the columns for which the Consumer can filter and sort by. We don’t want any database errors being sent to Consumers!</p><h3 id="status-codes">Status Codes</h3><p>It is very important that as a RESTful API, you make use of the proper HTTP Status Codes; they are a standard after all! Various network equipment is able to read these status codes, e.g. load balancers can be configured to avoid sending requests to a web server sending out lots of 50x errors. There are a&nbsp;<a title="HTTP Status Codes" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" rel="noopener">plethora of HTTP Status Codes</a>&nbsp;to choose from, however this list should be a good starting point:</p><ul><li><strong>200</strong>&nbsp;OK – [GET]<ul><li>The Consumer requested data from the Server, and the Server found it for them (Idempotent)</li></ul></li><li><strong>201</strong>&nbsp;CREATED – [POST/PUT/PATCH]<ul><li>The Consumer gave the Server data, and the Server created a resource</li></ul></li><li><strong>204</strong>&nbsp;NO CONTENT – [DELETE]<ul><li>The Consumer asked the Server to delete a Resource, and the Server deleted it</li></ul></li><li><strong>400</strong>&nbsp;INVALID REQUEST – [POST/PUT/PATCH]<ul><li>The Consumer gave bad data to the Server, and the Server did nothing with it (Idempotent)</li></ul></li><li><strong>404</strong>&nbsp;NOT FOUND – [*]<ul><li>The Consumer referenced an inexistant Resource or Collection, and the Server did nothing&nbsp;(Idempotent)</li></ul></li><li><strong>500</strong>&nbsp;INTERNAL SERVER ERROR – [*]<ul><li>The Server encountered an error, and the Consumer has no knowledge if the request was successful</li></ul></li></ul><h4 id="status-code-ranges">Status Code Ranges</h4><p>The&nbsp;<strong>1xx</strong>&nbsp;range is reserved for low-level HTTP stuff, and you’ll very likely go your entire career without manually sending one of these status codes.</p><p>The&nbsp;<strong>2xx</strong>&nbsp;range is reserved for successful messages where all goes as planned. Do your best to ensure your Server sends as many of these to the Consumer as possible.</p><p>The&nbsp;<strong>3xx</strong>&nbsp;range is reserved for traffic redirection. Most APIs do not use these requests much (not nearly as often as the SEO folks use them ;), however, the newer Hypermedia style APIs will make more use of these.</p><p>The&nbsp;<strong>4xx</strong>&nbsp;range is reserved for responding to errors made by the Consumer, e.g. they’re providing bad data or asking for things which don’t exist. These requests should be be&nbsp;idempotent, and not change the state of the server.</p><p>The&nbsp;<strong>5xx</strong>&nbsp;range is reserved as a response when the Server makes a mistake. Often times, these errors are thrown by low-level functions even outside of the developers hands, to ensure a Consumer gets some sort of response. The Consumer can’t possibly know the state of the server when a 5xx response is received, and so these should be avoidable.</p><h3 id="expected-return-documents">Expected Return Documents</h3><p>When performing actions using the different HTTP verbs to Server endpoints, a Consumer needs to get some sort of information in return. This list is pretty typical of RESTful APIs:</p><ul><li>GET /collection: Return a listing (array) of Resource objects</li><li>GET /collection/resource: Return an individual Resource object</li><li>POST /collection: Return the newly created Resource object</li><li>PUT /collection/resource: Return the complete Resource object</li><li>PATCH /collection/resource: Return the complete Resource object</li><li>DELETE /collection/resource: Return an empty document</li></ul><p>Note that when a Consumer creates a Resource, they usually do not know the ID of the Resource being created (nor other attributes such as created and modified timestamps, if applicable). These additional attributes are returned with subsequent request, and of course as a response to the initial POST.</p><h3 id="authentication">Authentication</h3><p>Most of the time a Server will want to know exactly who is making which Requests. Sure, some APIs provide endpoints to be consumed by the general (anonymous) public, but most of the time work is being perform on behalf of someone.</p><p><a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">OAuth 2.0</a>&nbsp;provides a great way of doing this. With each Request, you can be sure you know which Consumer is making requests, which User they are making requests on behalf of, and provides a (mostly) standardized way of expiring access or allowing Users to revoke access from a Consumer, all without the need for a third-party consumer to know the Users login credentials.</p><p>There are also&nbsp;<a href="http://tools.ietf.org/html/rfc5849" target="_blank" rel="noopener">OAuth 1.0</a>&nbsp;and&nbsp;<a href="https://dev.twitter.com/docs/oauth/xauth" target="_blank" rel="noopener">xAuth</a>, which fill the same space. Whichever method you choose, make sure it is something common and well documented with many different libraries written for the languages/platforms which your Consumers will likely be using.</p><p>I can honestly tell you that OAuth 1.0a, while it is the most secure of the options, is a huge pain in the ass to implement. I was surprised by the number of Third Party Developers who had to implement their own library since one didn’t exist for their language already. I’ve spent enough hours debugging cryptic “invalid signature” errors to recommend you choose an alternative.</p><h3 id="content-type">Content Type</h3><p>Currently, the most “exciting” of APIs provide JSON data from RESTful interfaces. This includes Facebook, Twitter, GitHub, you name it. XML appears to have lost the war a while ago (except in large corporate environments). SOAP, thankfully, is all but dead, and we really don’t see much APIs providing HTML to be consumed (unless, that is, you’re building a scraper!)</p><p>Developers using popular languages and frameworks can very likely parse any valid data format you return to them. You can even provide data in any of the aforementioned data formats (not including SOAP) quite easily, if you’re building a common response object and using a different serializer. What does matter though, is that you make use of the Accept header when responding with data.</p><p>Some API creators recommend adding a .json, .xml, or .html file extension to the URL (after the endpoint) for specifying the content type to be returned, although I’m personally not a fan of this. I really like the Accept header (which is built into the HTTP spec) and feel that is the appropriate thing to use.</p><h3 id="hypermedia-apis">Hypermedia APIs</h3><p>Hypermedia APIs are very likely the future of RESTful API design. They’re actually a pretty amazing concept, going “back to the roots” of how HTTP and HTML was intended to work.</p><p>When working with non-Hypermedia RESTful APIs, the URL Endpoints are part of the contract between the Server and the Consumer. These Endpoints MUST be known by the Consumer ahead of time, and changing them means the Consumer is no longer able to communicate with the Server as intended. This, as you can assume, is quite a limitation.</p><p>Now, API Consumers are of course not the only user agent making HTTP requests on the Internet. Far from it. Humans, with their web browsers, are the most common user agent making HTTP requests. Humans, however, are NOT locked into this predefined Endpoint URL contract that RESTful APIs are.&nbsp;What makes humans so special? Well, they’re able to read content, click links for headings which look interesting, and in general explore a website and interpret content to get to where they want to go. If a URL changes, a human is not affected (unless, that is, they bookmarked a page, in which case they go to the homepage and find a new route to their beloved data).</p><p>The Hypermedia API concept works the same way a human would. Requesting the Root of the API returns a listing of URLs which point perhaps to each collection of information, and describing each collection in a way which the Consumer can understand. Providing IDs for each resource isn’t important (or necessarily required), as long as a URL is provided.</p><p>With the Consumer of a Hypermedia API crawling links and gathering information, URLs are always up-to-date within responses, and do not need to be known beforehand as part of a contract. If a URL is ever cached, and a subsequent request returns a 404, the Consumer can simply go back to the root and discover the content again.</p><p>When retrieving a list of Resources within a Collection, an attribute containing a complete URL for the individual Resources are returned. When performing a POST/PATCH/PUT, the response can be a 3xx redirect to the complete Resource.</p><p>JSON doesn’t quite give us the semantics we need for specifying which attributes are URLs, nor how URLs relate to the current document. HTML, as you can probably guess, does provide this information. We may very well see our APIs coming full circle and returning back to consuming HTML. Considering how far we’ve come with CSS, one day we may even see &nbsp;it be common practice for APIs and Websites to use the exact same URLs and content.</p><h3 id="documentation">Documentation</h3><p>Honestly, if you don’t conform 100% to the criteria in this guide, your API will not necessarily be horrible. However, if you don’t properly document your API, nobody is going to know how to use it, and it WILL be a horrible API.</p><p>Make your Documentation available to unauthenticated developers.</p><p>Do not use automatic documentation generators, or if you do, at least make sure you’re doctoring it up and making it presentable.</p><p>Do not truncate example request and response bodies; show the whole thing. Use a syntax highlighter in your documentation.</p><p>Document expected response codes and possible error messages for each endpoint, and what could have gone wrong to cause those error messages.</p><p>If you’ve got the spare time, build a developer API console so that developers can immediately experiment with your API. It’s not as hard as you might think and developers (both internal and third party) will love you for it!</p><p>Make sure your documentation can be printed; CSS is a powerful thing; don’t be afraid to hide that sidebar when the docs are printed. Even if nobody ever prints a physical copy, you’d be surprised at how many developers like to print to PDF for offline reading.</p><h3 id="errata-raw-http-packet">Errata: Raw HTTP Packet</h3><p>Since everything we do is over HTTP, I’m going to show you a dissection of an HTTP packet. I’m often surprised at how many people don’t know what these things look like! When the Consumer sends a Request to the Server, they provide a set of Key/Value pairs, called a Header, along with two newline characters, and finally the request body. This is all sent in the same packet.</p><p>The server then responds in the say Key/Value pair format, with two newlines and then the response body. HTTP is very much a request/response protocol; there is no “Push” support (the Server sending data to the Consumer unprovoked), unless you use a different protocol such as Websockets.</p><p>When designing your API, you should be able to work with tools which allow you to look at raw HTTP packets. Consider using&nbsp;<a href="https://www.wireshark.org/" target="_blank" rel="noopener">Wireshark</a>, for example. Also, make sure you are using a framework / web server which allows you to read and change as many of these fields as possible.</p><h4 id="example-http-request">Example HTTP Request</h4><pre><code>POST /v1/animal HTTP/1.1
+Host: api.example.org
+Accept: application/json
+Content-Type: application/json
+Content-Length: 24
+
+<p>{<br>  “name”: “Gir”,<br>  “animal_type”: 12<br>}</code></pre><h4 id="example-http-response">Example HTTP Response</h4><pre><code>HTTP/1.1 200 OK<br>Date: Wed, 18 Dec 2013 06:08:22 GMT<br>Content-Type: application/json<br>Access-Control-Max-Age: 1728000<br>Cache-Control: no-cache</p>
+<p>{<br>  "id": 12,<br>  "created": 1386363036,<br>  "modified": 1386363036,<br>  "name": "Gir",<br>  "animal_type": 12<br>}</code></pre></p>
+
+            
+        </section>
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/RESTful/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">RESTful</a>
+				
+			
+		
+        </footer>
+    </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
+			<a href="/2020/02/02/RESTful%20%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="RESTful 架构详解">上一篇</a>
+		
+
+		
+		
+			<a href="/2020/02/02/WINDOWS%20%E5%BC%80%E6%BA%90%20ASP.NET%20CORE/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="WINDOWS 开源 ASP.NET CORE">下一篇</a>
+		
+
+        <div style="clear: both;"></div>
+    </article>
+
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
+            
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
+
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/Principles%20of%20good%20RESTful%20API%20Design/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
+    
+</div>
+
+            
+            <footer class="blog-footer">
+                <p class="blog-footer-left">Copyright ©  2020 <a
+                        href="http://easybhu.cn">Force's Blog</a></p>
+                <p class="blog-footer-right">Powered by <a href="https://hexo.io" target="_blank">Hexo</a></p>
+            </footer>
+        </div><!--博客主栏结束-->
+        <!--博客侧边栏开始-->
+        <div class="col-xl-3 blog-sidebar">
+            <div class="blog-sidebar-title">
+                <a href="">Force's Blog</a>
+            </div>
+            <div class="blog-sidebar-logo">
+                <img src="/images/avatar.jpg">
+            </div>
+            <div class="blog-sidebar-count blog-sidebar-padding">
+                <div class="blog-sidebar-count-left">
+                    <p class="blog-sidebar-count-p">14</p>
+                    <span class="blog-sidebar-count-span">文章</span>
+                </div>
+                <div class="blog-sidebar-count-right">
+                    <p class="blog-sidebar-count-p">12</p>
+                    <span class="blog-sidebar-count-span">标签</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="blog-sidebar-icon blog-sidebar-padding">
+                <ul>
+                    <li><a href="https://github.com/fsd-lsh" class="icon-github" target="_blank" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://weibo.com/hanshusu" class="icon-weibo" target="_blank" data-toggle="tooltip" data-placement="top" title="新浪微博"><i class="fa fa-weibo"></i></a></li>
+                    <li><a href="mailto:lisihan@outlook.com" class="icon-email" data-toggle="tooltip" data-placement="top" title="E-Mail"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://twitter.com/LisihanSever" class="icon-twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <!--<li><a href="" class="icon-facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="FaceBook"><i class="fa fa-facebook"></i></a></li>-->
+                    <!--<li><a href="" class="icon-rss" data-toggle="tooltip" target="_blank" data-placement="top" title="RSS"><i class="fa fa-rss"></i></a></li>-->
+                </ul>
+            </div>
+            <div class="blog-sidebar-categories">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-folder-open"></i>&nbsp;文章分类</h4>
+                <ul class="list-group blog-sidebar-padding">
+                    
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/GoLang/">GoLang</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/">Mysql</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Php/">Php</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/JavaScript/">JavaScript</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/RESTful/">RESTful</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/Json/">Json</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Windows/">Windows</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/hexo/">hexo</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Html/">Html</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="blog-sidebar-tags">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-tag"></i>&nbsp;标签云</h4>
+                <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
+                    
+                    
+                    <li><a href="/tags/GoLang/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="GoLang">GoLang</a></li>
+                    
+                    <li><a href="/tags/Mysql/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Mysql">Mysql</a></li>
+                    
+                    <li><a href="/tags/Php/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Php">Php</a></li>
+                    
+                    <li><a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="抽象类">抽象类</a></li>
+                    
+                    <li><a href="/tags/JavaScript/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="JavaScript">JavaScript</a></li>
+                    
+                    <li><a href="/tags/Js/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Js">Js</a></li>
+                    
+                    <li><a href="/tags/RESTful/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="RESTful">RESTful</a></li>
+                    
+                    <li><a href="/tags/Json/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Json">Json</a></li>
+                    
+                    <li><a href="/tags/Windows/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Windows">Windows</a></li>
+                    
+                    <li><a href="/tags/Hexo/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Hexo">Hexo</a></li>
+                    
+                    <li><a href="/tags/Blog/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Blog">Blog</a></li>
+                    
+                    <li><a href="/tags/Html/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Html">Html</a></li>
+                    
+                    
+                </ul>
+            </div>
+            <script>
+                // 博客侧栏标签云随机色
+                var tag_cloud = $('.tag-could');
+                tag_cloud.each(function () {
+                    var Cnum = 9;
+                    var Crand = parseInt(Math.random() * Cnum);
+                    $(this).addClass("tag-could" + Crand);
+                })
+            </script>
+            <!--返回顶部按钮-->
+            <div class="retop">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </div><!--博客侧边栏结束-->
+    </div>
+</div>
+<script src="/js/LeanStatistics.min.js"></script>
+<script src="/js/myLife.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+    otherF();
+    LeanStatistics();
+    $(document).pjax('a', '#pjax-box', {fragment: '#pjax-box', timeout: 8000}).on('pjax:complete', function () {
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        })
+        $('code.hljs').each(function (i, block) {
+            hljs.lineNumbersBlock(block);
+        });
+        LeanStatistics();
+    }).on('pjax:start', function () {
+        NProgress.start();
+    }).on('pjax:end', function () {
+        NProgress.done();
+        otherF();
+    });
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?1fbc1ca8ae02957dc68abed2e0906f03";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

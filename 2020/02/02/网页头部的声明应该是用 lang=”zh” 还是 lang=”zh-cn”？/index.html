@@ -1,0 +1,469 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
+    <title>网页头部的声明应该是用 lang=”zh” 还是 lang=”zh-cn”？Force's Blog</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    
+    <link rel="stylesheet" href="/css/jquery.fancybox.css">
+    
+    <link rel="stylesheet" href="/css/nprogress.min.css">
+    
+    <link rel="stylesheet" href="/css/valine.css">
+    
+    <link rel="stylesheet" href="/css/life.css">
+    
+    
+
+    
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    
+    
+    
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    
+    <script src="https://cdn1.lncld.net/static/js/3.1.0/av-min.js"></script>
+    
+    <script src="/js/jquery.pjax.js"></script>
+    
+    <script src="/js/nprogress.min.js"></script>
+    
+    <script src="/js/tether.min.js"></script>
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    <script src="/js/highlight.min.js"></script>
+    
+    <script src="/js/highlightjs-line-numbers.min.js"></script>
+    
+    <script src="/js/jquery.fancybox.js"></script>
+    
+    <script src="/js/jquery.qrcode.min.js"></script>
+    
+    <script src="/js/Valine.min.js"></script>
+    
+    
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+<script>AV.init({appId: '', appKey: ''});</script>
+<script type="text/javascript">
+    var config = {
+        ClasS: 'Counter',
+        el: '.views',
+        elP: '.views-post'
+    }
+</script>
+<div class="container">
+    <div class="row blog-box-shadow">
+        <!--博客主栏开始-->
+        <div class="col-xl-9 col-lg-12 blog-main" id="pjax-box">
+            <header class="blog-header">
+                <a href="http://easybhu.cn" class="blog-header-mobile-title">Force's Blog</a>
+                <a href="javascript:;" class="blog-header-navbar-btn"><i class="fa fa-bars"></i></a>
+                <nav class="blog-header-navbar blog-header-fixed">
+                    <ul class="blog-navbar-links">
+                        
+                        <li class="blog-nav-item"><a href="/" class="transition">首页</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/about/" class="transition">关于</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/links/" class="transition">链接</a></li>
+                        
+                        <div class="blog-navbar-right">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="blog-header-search" placeholder="search...">
+                                    <buttn type="submit" class="blog-header-search-btn"><i class="fa fa-search"></i>
+                                    </buttn>
+                                </div>
+                            </form>
+                        </div>
+                    </ul>
+                </nav>
+            </header>
+            
+<header class="blog-post-page-title">
+    <h4>网页头部的声明应该是用 lang=”zh” 还是 lang=”zh-cn”？</h4>
+    <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
+    
+    
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/Html/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Html</a>
+    		
+        </span>
+	
+    
+</header>
+<div class="blog-main-post blog-post-page-box">
+    <article class="blog-post-block blog-post-page-content">
+        <section>
+            
+                <p>Ple“zh”是中文，代表的是宏语言（Macrolanguage），单独使用表示“中文”整体，可以是方言、文言文、简体、繁体等单独一种，也可以是任意组合的混合内容。“zh-CN”理论上表示的是“中文 (中国大陆)”，因为中国大陆的官方语言是“普通话 (简体)”，所以这个“zh”的局限性就体现出来了：比如“尋尋覓覓，冷冷清清，悽悽慘慘戚戚”，用“zh-CN”描述没法表达出“繁體”和“文言文”，但描述成“zh-TW”则成了“中文 (繁體, 台灣)”，虽然指明了“繁体”，但还是没能体现出“文言文”，同时还丢失了“中国大陆”。针对这种情况，按照 BCP 47 规范 (详见参考链接 2)，应该使用独立语种更精确地描述：</p><p><span id="more-178"></span></p><div><div><pre><code>cmn 普通话（官话、国语）
+wuu 吴语（江浙话、上海话）
+czh 徽语（徽州话、严州话、吴语-徽严片）
+hak 客家语
+yue 粤语（广东话）
+nan 闽南语（福建话、台语）
+cpx 莆仙话（莆田话、兴化语）
+cdo 闽东语
+mnp 闽北语
+zco 闽中语
+gan 赣语（江西话）
+hsn 湘语（湖南话）
+cjy 晋语（山西话、陕北话）</code></pre></div><p>语言文字标签书写顺序：</p><div><pre><code>language-extlang-script-region-variant-extension-privateuse
+语言文字种类-扩展语言文字种类-书写格式-国家和地区-变体-扩展-私有
+</code></pre></div><p>语言文字标签示例：</p><div><pre><code>language:
+fr 法语
+es 西班牙语
+
+<p>language-extlang:<br>zh-lzh 中文 (文言文)<br>sgn-csl 手语 (中国大陆)</p>
+<p>language-script:<br>cmn-Hans 普通话 (简体)<br>yue-Hant 粤语 (繁体)</p>
+<p>language-region:<br>zh-CN 中文 (简体, 中国大陆)<br>en-US 英语 (美国)</p>
+<p>language-script-region：<br>cmn-Hans-CN 普通话 (简体, 中国大陆)<br>cmn-Hant-TW 普通话 (繁体, 台湾)</p>
+<p>language-script-variant:<br>zh-Latn-pinyin 汉语拼音（例：nǐ，拉丁字母形式）<br>zh-Bopo-pinyin 注音拼音（例：ㄋ丨ˇ，罗马字形式，中国大陆 1958 年以前使用，台湾目前使用）</p>
+<p>常见的一般有 language、language-script 和 language-region 三种。<br></code></pre></div><p>附注 1：</p><p>“cmn”“wuu”“yue”等 2005 年确定的 extlang 标记已于 2009 年提升为 language 标记，维基百科中“吴语”“粤语”等页面均已使用最新的标准写法，以下以“zh”开头的写法已被废弃并不再推荐使用 (详见参考链接 3)，请直接去掉“zh-”前缀并使用“cmn”“wuu”“yue”等代替即可：</p><div><pre><code>zh-Hans, zh-Hans-CN, zh-cmn, zh-cmn-Hans, zh-wuu, zh-yue, zh-gan....<br>类似还有 zh-Hans-HK、zh-Hans-MO、zh-Hans-TW、zh-Hant<br></code></pre></div><p>废弃可能原因：在语言学的分类上，中国语言学者多认为“吴语”“粤语”“闽语”等是“汉语”的方言，而西方学者多认为这些语言是一门和“普通话”同级关系的单独语种。</p><p>中国大陆常见划分：</p><div><pre><code>1. 汉藏语系<br>   1.1. 汉语族<br>        1.1.1. 汉语<br>   1.2. 藏缅语族<br>   1.3. 苗瑶语族<br>   1.4. 壮侗语族</p>
+<p>“汉语族”仅包含“汉语”一门语言，“吴语”“客家语”“粤语”“闽语”等均归属于“汉语”的不同方言。<br></code></pre></div><p>西方常见划分：</p><div><pre><code>1. 汉藏语系<br>   1.1. 汉语族<br>        1.1.1. 普通话（官话、国语）<br>        1.1.2. 吴语（江浙话、上海话）<br>        1.1.3. 徽语（徽州话、严州话、吴语-徽严片）<br>        1.1.4. 客家语<br>        1.1.5. 粤语（广东话）<br>        1.1.6. 闽南语（福建话、台语）<br>        1.1.7. 莆仙话（莆田话、兴化语）<br>        1.1.8. 闽东语<br>        1.1.9. 闽北语<br>        1.1.10. 闽中语<br>        1.1.11. 赣语（江西话）<br>        1.1.12. 湘语（湖南话）<br>        1.1.13. 晋语（山西话、陕北话）<br>   1.2. 藏缅语族<br>   1.3. 苗瑶语族<br>   1.4. 壮侗语族</p>
+<p>“汉语族”包含“普通话”“吴语”“徽语”“客家话”“粤语”等多种语言。<br></code></pre></div><p><b>重点来了！</b></p><p>以下两种写法均正确，后者描述更精准，但大部分程序和操作系统都只能识别前者，使用新标准可能会造成无法匹配浏览器用户定义字体、网页翻译、程序语言自动切换等功能，为了兼容性的考量，推荐使用前者：</p><div><pre><code>zh-CN 中文 (简体, 中国大陆)  对应 cmn-Hans-CN 普通话 (简体, 中国大陆)<br>zh-SG 中文 (简体, 新加坡)   对应 cmn-Hans-SG 普通话 (简体, 新加坡)<br>zh-HK 中文 (繁体, 香港)     对应 yue-Hant-HK 粤语 (繁体, 香港)<br>zh-MO 中文 (繁体, 澳门)     对应 yue-Hant-MO 粤语 (繁体, 澳门)<br>zh-TW 中文 (繁体, 台湾)     对应 cmn-Hant-TW 普通话 (繁体, 台湾)<br></code></pre></div><p>附注 2：</p><p>同是简体中文页面， 默认或书面语均标记为“cmn (普通话)”，全文使用地方方言表达时，使用相应语言文字标签标记，例：</p><div><pre><code>“你” “我们” 用 cmn-Hans 普通话 (简体)<br>“侬” “啊啦” 用 wuu-Hans 吴语 (简体)<br>“你” “我哋” 用 yue-Hans 粤语 (简体)<br></code></pre></div><p>一般情况不用 region 选项，但如果要针对特定地区特定用语的友好性，则应设置区域，例 ：</p><div><pre><code>“消息” “黄梨” “自行车” 用 cmn-Hans-SG 普通话 (简体, 新加坡)<br>“消息” “菠萝” “自行车” 用 cmn-Hans-CN 普通话 (简体, 中国大陆)<br>“消息” “菠蘿” “自行車” 用 cmn-Hant-CN 普通话 (繁体, 中国大陆)<br>“訊息” “菠蘿” “单车”   用 cmn-Hant-HK 普通话 (繁体, 香港)<br>“訊息” “鳳梨” “腳踏車” 用 cmn-Hant-TW 普通话 (繁体, 台湾)</p>
+<p>“analyse” “color” “elevator” 用 en-US 英语 (美国)<br>“analyze” “colour” “lift”    用 en-GB 英语 (英国)</code></pre><p>原文链接：<a href="https://www.zhihu.com/question/20797118/answer/63480740" target="_blank" rel="noopener">https://www.zhihu.com/question/20797118/answer/63480740</a></p></div></div><p><br></p></p>
+
+            
+        </section>
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/Html/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Html</a>
+				
+			
+		
+        </footer>
+    </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
+			<a href="/2020/02/02/go%20map%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="go map详细使用方法">上一篇</a>
+		
+
+		
+		
+			<a href="/2020/02/02/hello-world/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="Hexo 博客快速建立及部署">下一篇</a>
+		
+
+        <div style="clear: both;"></div>
+    </article>
+
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
+            
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
+
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/%E7%BD%91%E9%A1%B5%E5%A4%B4%E9%83%A8%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BA%94%E8%AF%A5%E6%98%AF%E7%94%A8%20lang=%E2%80%9Dzh%E2%80%9D%20%E8%BF%98%E6%98%AF%20lang=%E2%80%9Dzh-cn%E2%80%9D%EF%BC%9F/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
+    
+</div>
+
+            
+            <footer class="blog-footer">
+                <p class="blog-footer-left">Copyright ©  2020 <a
+                        href="http://easybhu.cn">Force's Blog</a></p>
+                <p class="blog-footer-right">Powered by <a href="https://hexo.io" target="_blank">Hexo</a></p>
+            </footer>
+        </div><!--博客主栏结束-->
+        <!--博客侧边栏开始-->
+        <div class="col-xl-3 blog-sidebar">
+            <div class="blog-sidebar-title">
+                <a href="">Force's Blog</a>
+            </div>
+            <div class="blog-sidebar-logo">
+                <img src="/images/avatar.jpg">
+            </div>
+            <div class="blog-sidebar-count blog-sidebar-padding">
+                <div class="blog-sidebar-count-left">
+                    <p class="blog-sidebar-count-p">14</p>
+                    <span class="blog-sidebar-count-span">文章</span>
+                </div>
+                <div class="blog-sidebar-count-right">
+                    <p class="blog-sidebar-count-p">12</p>
+                    <span class="blog-sidebar-count-span">标签</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="blog-sidebar-icon blog-sidebar-padding">
+                <ul>
+                    <li><a href="https://github.com/fsd-lsh" class="icon-github" target="_blank" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://weibo.com/hanshusu" class="icon-weibo" target="_blank" data-toggle="tooltip" data-placement="top" title="新浪微博"><i class="fa fa-weibo"></i></a></li>
+                    <li><a href="mailto:lisihan@outlook.com" class="icon-email" data-toggle="tooltip" data-placement="top" title="E-Mail"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://twitter.com/LisihanSever" class="icon-twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <!--<li><a href="" class="icon-facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="FaceBook"><i class="fa fa-facebook"></i></a></li>-->
+                    <!--<li><a href="" class="icon-rss" data-toggle="tooltip" target="_blank" data-placement="top" title="RSS"><i class="fa fa-rss"></i></a></li>-->
+                </ul>
+            </div>
+            <div class="blog-sidebar-categories">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-folder-open"></i>&nbsp;文章分类</h4>
+                <ul class="list-group blog-sidebar-padding">
+                    
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/GoLang/">GoLang</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/">Mysql</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Php/">Php</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/JavaScript/">JavaScript</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/RESTful/">RESTful</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/Json/">Json</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Windows/">Windows</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/hexo/">hexo</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Html/">Html</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="blog-sidebar-tags">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-tag"></i>&nbsp;标签云</h4>
+                <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
+                    
+                    
+                    <li><a href="/tags/GoLang/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="GoLang">GoLang</a></li>
+                    
+                    <li><a href="/tags/Mysql/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Mysql">Mysql</a></li>
+                    
+                    <li><a href="/tags/Php/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Php">Php</a></li>
+                    
+                    <li><a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="抽象类">抽象类</a></li>
+                    
+                    <li><a href="/tags/JavaScript/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="JavaScript">JavaScript</a></li>
+                    
+                    <li><a href="/tags/Js/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Js">Js</a></li>
+                    
+                    <li><a href="/tags/RESTful/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="RESTful">RESTful</a></li>
+                    
+                    <li><a href="/tags/Json/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Json">Json</a></li>
+                    
+                    <li><a href="/tags/Windows/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Windows">Windows</a></li>
+                    
+                    <li><a href="/tags/Hexo/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Hexo">Hexo</a></li>
+                    
+                    <li><a href="/tags/Blog/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Blog">Blog</a></li>
+                    
+                    <li><a href="/tags/Html/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Html">Html</a></li>
+                    
+                    
+                </ul>
+            </div>
+            <script>
+                // 博客侧栏标签云随机色
+                var tag_cloud = $('.tag-could');
+                tag_cloud.each(function () {
+                    var Cnum = 9;
+                    var Crand = parseInt(Math.random() * Cnum);
+                    $(this).addClass("tag-could" + Crand);
+                })
+            </script>
+            <!--返回顶部按钮-->
+            <div class="retop">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </div><!--博客侧边栏结束-->
+    </div>
+</div>
+<script src="/js/LeanStatistics.min.js"></script>
+<script src="/js/myLife.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+    otherF();
+    LeanStatistics();
+    $(document).pjax('a', '#pjax-box', {fragment: '#pjax-box', timeout: 8000}).on('pjax:complete', function () {
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        })
+        $('code.hljs').each(function (i, block) {
+            hljs.lineNumbersBlock(block);
+        });
+        LeanStatistics();
+    }).on('pjax:start', function () {
+        NProgress.start();
+    }).on('pjax:end', function () {
+        NProgress.done();
+        otherF();
+    });
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?1fbc1ca8ae02957dc68abed2e0906f03";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

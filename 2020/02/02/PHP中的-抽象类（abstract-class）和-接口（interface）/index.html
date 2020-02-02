@@ -1,0 +1,444 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
+    <title>PHP中的 抽象类（abstract class）和 接口（interface）Force's Blog</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    
+    <link rel="stylesheet" href="/css/jquery.fancybox.css">
+    
+    <link rel="stylesheet" href="/css/nprogress.min.css">
+    
+    <link rel="stylesheet" href="/css/valine.css">
+    
+    <link rel="stylesheet" href="/css/life.css">
+    
+    
+
+    
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    
+    
+    
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    
+    <script src="https://cdn1.lncld.net/static/js/3.1.0/av-min.js"></script>
+    
+    <script src="/js/jquery.pjax.js"></script>
+    
+    <script src="/js/nprogress.min.js"></script>
+    
+    <script src="/js/tether.min.js"></script>
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    <script src="/js/highlight.min.js"></script>
+    
+    <script src="/js/highlightjs-line-numbers.min.js"></script>
+    
+    <script src="/js/jquery.fancybox.js"></script>
+    
+    <script src="/js/jquery.qrcode.min.js"></script>
+    
+    <script src="/js/Valine.min.js"></script>
+    
+    
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+<script>AV.init({appId: '', appKey: ''});</script>
+<script type="text/javascript">
+    var config = {
+        ClasS: 'Counter',
+        el: '.views',
+        elP: '.views-post'
+    }
+</script>
+<div class="container">
+    <div class="row blog-box-shadow">
+        <!--博客主栏开始-->
+        <div class="col-xl-9 col-lg-12 blog-main" id="pjax-box">
+            <header class="blog-header">
+                <a href="http://easybhu.cn" class="blog-header-mobile-title">Force's Blog</a>
+                <a href="javascript:;" class="blog-header-navbar-btn"><i class="fa fa-bars"></i></a>
+                <nav class="blog-header-navbar blog-header-fixed">
+                    <ul class="blog-navbar-links">
+                        
+                        <li class="blog-nav-item"><a href="/" class="transition">首页</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/about/" class="transition">关于</a></li>
+                        
+                        <li class="blog-nav-item"><a href="/links/" class="transition">链接</a></li>
+                        
+                        <div class="blog-navbar-right">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="blog-header-search" placeholder="search...">
+                                    <buttn type="submit" class="blog-header-search-btn"><i class="fa fa-search"></i>
+                                    </buttn>
+                                </div>
+                            </form>
+                        </div>
+                    </ul>
+                </nav>
+            </header>
+            
+<header class="blog-post-page-title">
+    <h4>PHP中的 抽象类（abstract class）和 接口（interface）</h4>
+    <time datetime="2020-02-02T09:29:56.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
+    
+    
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/Php/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Php</a>
+    		
+        </span>
+	
+    
+</header>
+<div class="blog-main-post blog-post-page-box">
+    <article class="blog-post-block blog-post-page-content">
+        <section>
+            
+                <p>抽象类abstract class<br><br>1 ．抽象类是指在 class 前加了 abstract 关键字且存在抽象方法（在类方法 function 关键字前加了 abstract 关键字）的类。<br><br>2 ．抽象类不能被直接实例化。抽象类中只定义（或部分实现）子类需要的方法。子类可以通过继承抽象类并通过实现抽象类中的所有抽象方法，使抽象类具体化。<br><br>3 ．如果子类需要实例化，前提是它实现了抽象类中的所有抽象方法。如果子类没有全部实现抽象类中的所有抽象方法，那么该子类也是一个抽象类，必须在 class 前面加上 abstract 关键字，并且不能被实例化。<br><br></p><pre><code>abstract class A<br>{<br>    /** 抽象类中可以定义变量 */<br>    protected  = 0;<br>    private  = 1;<br>    public  = 2;<br>    /** 也可以定义非抽象方法 */<br>    public function my_print()<br>    {<br>        echo "hello,world/n";<br>    }<br>    /**<br>     * 大多数情况下，抽象类至少含有一个抽象方法。抽象方法用abstract关键字声明，其中不能有具体内容。<br>     * 可以像声明普通类方法那样声明抽象方法，但是要以分号而不是方法体结束。也就是说抽象方法在抽象类中不能被实现，也就是没有函数体“{some codes}”。<br>     */<br>    abstract protected function abstract_func1();<br>    abstract protected function abstract_func2();<br>}<br>abstract class B extends A<br>{<br>    public function abstract_func1()<br>    {<br>       echo "implement the abstract_func1 in class A/n";<br>    }<br>    /** 这么写在zend studio 8中会报错*/<br>    //abstract protected function abstract_func2();<br>}<br>class C extends B<br>{<br>    public function abstract_func2()<br>    {<br>       echo "implement the abstract_func2 in class A/n";<br>    }<br>}</code></pre><p>4 ．如果像下面这样创建了一个继承自 A 的子类 B ，但是不实现抽象方法 abstract_func() ：<br></p><pre><code>Class B extends A{};</code></pre><p>那么程序将出现以下错误：<br></p><pre><code>Fatal error: Class B contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (A::abstract_func)</code></pre><p><br>5 ．如果 B 实现了抽象方法 abstract_func() ，那么 B 中 abstract_func() 方法的访问控制不能比 A 中 abstract_func() 的访问控制更严格，也就是说：<br><br>(1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果 A 中 abstract_func() 声明为 public ，那么 B 中 abstract_func() 的声明只能是 public ，不能是 protected 或 private<br><br>(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果 A 中 abstract_func() 声明为 protected ，那么 B 中 abstract_func() 的声明可以是 public 或 protected ，但不能是 private<br><br>(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果 A 中 abstract_func() 声明为 private ，嘿嘿，不能定义为 private 哦！（ Fatal error : Abstract function A::abstract_func() cannot be declared private ）<br><br>二、 接口interface<br><br>1 ．抽象类提供了具体实现的标准，而接口则是纯粹的模版。接口只定义功能，而不包含实现的内容。接口用关键字 interface 来声明。<br><br>2 ． interface 是完全抽象的，只能声明方法，而且只能声明 public 的方法，不能声明 private 及 protected 的方法，不能定义方法体，也不能声明实例变量 。然而， interface 却可以声明常量变量 。但将常量变量放在 interface 中违背了其作为接口的作用而存在的宗旨，也混淆了 interface 与类的不同价值。如果的确需要，可以将其放在相应的 abstract class 或 Class 中。<br></p><pre><code>interface iA<br>{<br>    const AVAR=3;<br>    public function iAfunc1();<br>    public function iAfunc2();<br>}<br>echo iA:: AVAR;</code></pre><p>3 ．任何实现接口的类都要实现接口中所定义的所有方法</p><pre><code>class E implements iA<br>{<br>    public function iAfunc1(){echo "in iAfunc1";}<br>    public function iAfunc2(){echo "in iAfunc2";}<br>}</code></pre><p>否则该类必须声明为 abstract 。<br></p><pre><code>abstract class E implements iA{}</code></pre><p>4 ．一个类可以在声明中使用 implements 关键字来实现某个接口。这么做之后，实现接口的具体过程和继承一个仅包含抽象方法的抽象类是一样的。一个类可以同时继承一个父类和实现任意多个接口。 extends 子句应该在 implements 子句之前。 PHP 只支持继承自一个父类，因此 extends 关键字后只能跟一个类名。<br></p><pre><code>interface iB<br>{<br>    public function iBfunc1();<br>    public function iBfunc2();<br>}<br>class D extends A implements iA,iB<br>{<br>    public function abstract_func1()<br>    {<br>       echo "implement the abstract_func1 in class A/n";<br>    }<br>    public function abstract_func2()<br>    {<br>       echo "implement the abstract_func2 in class A/n";<br>    }<br>    public function iAfunc1(){echo "in iAfunc1";}<br>    public function iAfunc2(){echo "in iAfunc2";}<br>    public function iBfunc1(){echo "in iBfunc1";}<br>    public function iBfunc2(){echo "in iBfunc2";}<br>}<br> <br>class D extends B implements iA,iB<br>{<br>    public function abstract_func1()<br>    {<br>       parent::abstract_func1();<br>       echo "override the abstract_func1 in class A/n";<br>    }<br>    public function abstract_func2()<br>    {<br>       echo "implement the abstract_func2 in class A/n";<br>    }<br>    public function iAfunc1(){echo "in iAfunc1";}<br>    public function iAfunc2(){echo "in iAfunc2";}<br>    public function iBfunc1(){echo "in iBfunc1";}<br>    public function iBfunc2(){echo "in iBfunc2";}<br>}</code></pre><p>5 ．接口不可以实现另一个接口，但可以继承多个<br></p><pre><code>interface iC extends iA,iB{}<br>class F implements iC<br>{<br>    public function iAfunc1(){echo "in iAfunc1";}<br>    public function iAfunc2(){echo "in iAfunc2";}<br>    public function iBfunc1(){echo "in iBfunc1";}<br>    public function iBfunc2(){echo "in iBfunc2";}<br>}</code></pre><p>三、 抽象类和接口的异同<br><br>1. 相同点：<br><br>(1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 两者都是抽象类，都不能实例化。<br><br>(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interface 实现类及 abstract class 的子类都必须要实现已经声明的抽象方法。<br><br>2. 不同点：<br><br>(1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interface 需要实现，要用 implements ，而 abstract class 需要继承，要用 extends 。<br><br>(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一个类可以实现多个 interface ，但一个类只能继承一个 abstract class 。<br><br>(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; interface 强调特定功能的实现，而 abstract class 强调所属关系。<br><br>(4)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 尽管 interface 实现类及 abstract class 的子类都必须要实现相应的抽象方法，但实现的形式不同。 interface 中的每一个方法都是抽象方法，都只是声明的 (declaration, 没有方法体 ) ，实现类必须要实现。而 abstract class 的子类可以有选择地实现。这个选择有两点含义： a) abstract class 中并非所有的方法都是抽象的，只有那些冠有 abstract 的方法才是抽象的，子类必须实现。那些没有 abstract 的方法，在 abstract class 中必须定义方法体； b) abstract class 的子类在继承它时，对非抽象方法既可以直接继承，也可以覆盖；而对抽象方法，可以选择实现，也可以留给其子类来实现，但此类必须也声明为抽象类。既是抽象类，当然也不能实例化。<br><br>(5)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; abstract class 是 interface 与 class 的中介。 abstract class 在 interface 及 class 中起到了承上启下的作用。一方面， abstract class 是抽象的，可以声明抽象方法，以规范子类必须实现的功能；另一方面，它又可以定义缺省的方法体，供子类直接使用或覆盖。另外，它还可以定义自己的实例变量，以供子类通过继承来使用。<br><br>(6)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 接口中的抽象方法前不用也不能加 abstract 关键字，默认隐式就是抽象方法，也不能加 final 关键字来防止抽象方法的继承。而抽象类中抽象方法前则必须加上 abstract 表示显示声明为抽象方法。<br><br>(7)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 接口中的抽象方法默认是 public 的，也只能是 public 的，不能用 private ， protected 修饰符修饰。而抽象类中的抽象方法则可以用 public ， protected 来修饰，但不能用 private 。<br><br>3. interface 的应用场合<br><br>(1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 类与类之间需要特定的接口进行协调，而不在乎其如何实现。<br><br>(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 作为能够实现特定功能的标识存在，也可以是什么接口方法都没有的纯粹标识。<br><br>(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要将一组类视为单一的类，而调用者只通过接口来与这组类发生联系。<br><br>(4)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 需要实现特定的多项功能，而这些功能之间可能完全没有任何联系。<br><br>4. abstract class 的应用场合<br><br>一句话，在既需要统一的接口，又需要实例变量或缺省的方法的情况下，就可以使用它。最常见的有：<br><br>(1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 定义了一组接口，但又不想强迫每个实现类都必须实现所有的接口。可以用 abstract class 定义一组方法体，甚至可以是空方法体，然后由子类选择自己所感兴趣的方法来覆盖。<br><br>(2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 某些场合下，只靠纯粹的接口不能满足类与类之间的协调，还必需类中表示状态的变量来区别不同的关系。 abstract 的中介作用可以很好地满足这一点。<br><br>(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 规范了一组相互协调的方法，其中一些方法是共同的，与状态无关的，可以共享的，无需子类分别实现；而另一些方法却需要各个子类根据自己特定的状态来实现特 定的功能 。<br>--------------------- <br>版权声明：本文为CSDN博主「sunlylorn」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。<br>原文链接：https://blog.csdn.net/sunlylorn/article/details/6124319</p>
+            
+        </section>
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/Php/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Php</a>
+				
+			<a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">抽象类</a>
+				
+			
+		
+        </footer>
+    </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
+			<a href="/2020/02/02/mysql-json%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="mysql json使用类型查询函数">上一篇</a>
+		
+
+		
+		
+			<a href="/2020/02/02/GO%20%E8%AE%BE%E7%BD%AE%20GOROOT%20%E5%92%8C%20GOPATH/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="GO 设置 GOROOT 和 GOPATH">下一篇</a>
+		
+
+        <div style="clear: both;"></div>
+    </article>
+
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
+            
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
+
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/PHP%E4%B8%AD%E7%9A%84-%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%88abstract-class%EF%BC%89%E5%92%8C-%E6%8E%A5%E5%8F%A3%EF%BC%88interface%EF%BC%89/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
+    
+</div>
+
+            
+            <footer class="blog-footer">
+                <p class="blog-footer-left">Copyright ©  2020 <a
+                        href="http://easybhu.cn">Force's Blog</a></p>
+                <p class="blog-footer-right">Powered by <a href="https://hexo.io" target="_blank">Hexo</a></p>
+            </footer>
+        </div><!--博客主栏结束-->
+        <!--博客侧边栏开始-->
+        <div class="col-xl-3 blog-sidebar">
+            <div class="blog-sidebar-title">
+                <a href="">Force's Blog</a>
+            </div>
+            <div class="blog-sidebar-logo">
+                <img src="/images/avatar.jpg">
+            </div>
+            <div class="blog-sidebar-count blog-sidebar-padding">
+                <div class="blog-sidebar-count-left">
+                    <p class="blog-sidebar-count-p">14</p>
+                    <span class="blog-sidebar-count-span">文章</span>
+                </div>
+                <div class="blog-sidebar-count-right">
+                    <p class="blog-sidebar-count-p">12</p>
+                    <span class="blog-sidebar-count-span">标签</span>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+            <div class="blog-sidebar-icon blog-sidebar-padding">
+                <ul>
+                    <li><a href="https://github.com/fsd-lsh" class="icon-github" target="_blank" data-toggle="tooltip" data-placement="top" title="Github"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://weibo.com/hanshusu" class="icon-weibo" target="_blank" data-toggle="tooltip" data-placement="top" title="新浪微博"><i class="fa fa-weibo"></i></a></li>
+                    <li><a href="mailto:lisihan@outlook.com" class="icon-email" data-toggle="tooltip" data-placement="top" title="E-Mail"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="https://twitter.com/LisihanSever" class="icon-twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <!--<li><a href="" class="icon-facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="FaceBook"><i class="fa fa-facebook"></i></a></li>-->
+                    <!--<li><a href="" class="icon-rss" data-toggle="tooltip" target="_blank" data-placement="top" title="RSS"><i class="fa fa-rss"></i></a></li>-->
+                </ul>
+            </div>
+            <div class="blog-sidebar-categories">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-folder-open"></i>&nbsp;文章分类</h4>
+                <ul class="list-group blog-sidebar-padding">
+                    
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/GoLang/">GoLang</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/">Mysql</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Php/">Php</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/JavaScript/">JavaScript</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/RESTful/">RESTful</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/Json/">Json</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Windows/">Windows</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/hexo/">hexo</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Html/">Html</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="blog-sidebar-tags">
+                <h4 class="blog-sidebar-h4"><i class="fa fa-tag"></i>&nbsp;标签云</h4>
+                <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
+                    
+                    
+                    <li><a href="/tags/GoLang/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="GoLang">GoLang</a></li>
+                    
+                    <li><a href="/tags/Mysql/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Mysql">Mysql</a></li>
+                    
+                    <li><a href="/tags/Php/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Php">Php</a></li>
+                    
+                    <li><a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="抽象类">抽象类</a></li>
+                    
+                    <li><a href="/tags/JavaScript/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="JavaScript">JavaScript</a></li>
+                    
+                    <li><a href="/tags/Js/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Js">Js</a></li>
+                    
+                    <li><a href="/tags/RESTful/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="RESTful">RESTful</a></li>
+                    
+                    <li><a href="/tags/Json/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Json">Json</a></li>
+                    
+                    <li><a href="/tags/Windows/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Windows">Windows</a></li>
+                    
+                    <li><a href="/tags/Hexo/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Hexo">Hexo</a></li>
+                    
+                    <li><a href="/tags/Blog/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Blog">Blog</a></li>
+                    
+                    <li><a href="/tags/Html/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Html">Html</a></li>
+                    
+                    
+                </ul>
+            </div>
+            <script>
+                // 博客侧栏标签云随机色
+                var tag_cloud = $('.tag-could');
+                tag_cloud.each(function () {
+                    var Cnum = 9;
+                    var Crand = parseInt(Math.random() * Cnum);
+                    $(this).addClass("tag-could" + Crand);
+                })
+            </script>
+            <!--返回顶部按钮-->
+            <div class="retop">
+                <i class="fa fa-angle-up"></i>
+            </div>
+        </div><!--博客侧边栏结束-->
+    </div>
+</div>
+<script src="/js/LeanStatistics.min.js"></script>
+<script src="/js/myLife.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+    otherF();
+    LeanStatistics();
+    $(document).pjax('a', '#pjax-box', {fragment: '#pjax-box', timeout: 8000}).on('pjax:complete', function () {
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        })
+        $('code.hljs').each(function (i, block) {
+            hljs.lineNumbersBlock(block);
+        });
+        LeanStatistics();
+    }).on('pjax:start', function () {
+        NProgress.start();
+    }).on('pjax:end', function () {
+        NProgress.done();
+        otherF();
+    });
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?1fbc1ca8ae02957dc68abed2e0906f03";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

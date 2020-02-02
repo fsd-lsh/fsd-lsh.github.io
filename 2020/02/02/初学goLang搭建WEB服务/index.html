@@ -12,16 +12,15 @@
 
 
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" ,
-          user-scalable=no">
-    <title>Hexo 博客快速建立及部署Force's Blog</title>
-    <link rel="shortcut icon" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
+    <title>初学goLang搭建WEB服务Force's Blog</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
     
     
     
@@ -110,8 +109,8 @@
             </header>
             
 <header class="blog-post-page-title">
-    <h4>Hexo 博客快速建立及部署</h4>
-    <time datetime="2019-12-11T09:12:19.607Z"><i class="fa fa-clock-o"></i>2019-12-11</time>
+    <h4>初学goLang搭建WEB服务</h4>
+    <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
     
     
     
@@ -119,9 +118,7 @@
 	
         <span><i class="fa fa-folder-o"></i>
     		
-    	       <a href="/categories/hexo/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">hexo</a>
-    		
-    	       <a href="/categories/hexo/Blog/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Blog</a>
+    	       <a href="/categories/GoLang/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">GoLang</a>
     		
         </span>
 	
@@ -131,25 +128,14 @@
     <article class="blog-post-block blog-post-page-content">
         <section>
             
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+                <pre><code>package main<br>import (<br>    "fmt"<br>    "net/http"<br>    "strings"<br>    "log"<br>)<br>func sayhelloName(w http.ResponseWriter, r *http.Request) {<br>    r.ParseForm() //解析参数，默认是不会解析的<br>    fmt.Println(r.Form) //这些信息是输出到服务器端的打印信息<br>    fmt.Println("path", r.URL.Path)<br>    fmt.Println("scheme", r.URL.Scheme)<br>    fmt.Println(r.Form["url_long"])<br>    for k, v := range r.Form {<br>        fmt.Println("key:", k)<br>        fmt.Println("val:", strings.Join(v, ""))<br>    }<br>    fmt.Fprintf(w, "Hello!") //这个写入到w的是输出到客户端的<br>}<br>func main() {<br>    http.HandleFunc("/", sayhelloName) //设置访问的路由<br>    err := http.ListenAndServe(":9090", nil) //设置监听的端口<br>    if err != nil {<br>        log.Fatal("ListenAndServe: ", err);<br>    }<br>}</code></pre><p><br></p>
             
         </section>
         <footer class="blog-post-page-tags">
         
 			
 				
-			<a href="/tags/Hexo/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Hexo</a>
-				
-			<a href="/tags/Blog/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Blog</a>
+			<a href="/tags/GoLang/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">GoLang</a>
 				
 			
 		
@@ -159,8 +145,12 @@
     	
     	
 		
+			<a href="/2020/02/02/WINDOWS%20%E5%BC%80%E6%BA%90%20ASP.NET%20CORE/" class="blog-post-page-readmore-prev" data-toggle="tooltip" data-placement="top" title="WINDOWS 开源 ASP.NET CORE">上一篇</a>
+		
 
 		
+		
+			<a href="/2020/02/02/go%20map%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="go map详细使用方法">下一篇</a>
 		
 
         <div style="clear: both;"></div>
@@ -168,10 +158,6 @@
 
     <article class="blog-post-block blog-post-page-content">
             <div class="row">
-            
-                <div class="col-md-4 col-sm-4 post-page-more-btn">
-                    <span class="post-comments-btn btn btn-info btn-block" data-toggle="tooltip" data-placement="top" title="本站采用Disqus评论组件，若您没有科学上网可能会无法查看并评论">加载评论</span>
-                </div>
             
                 <div class="col-md-4 col-sm-4 post-page-more-btn">
                     <span  data-toggle="modal" data-target="#post-donate-content">
@@ -263,7 +249,7 @@
                 return out;
             }
             // 生成
-            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2019/12/11/hello-world/")}).hide();
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/02/02/%E5%88%9D%E5%AD%A6goLang%E6%90%AD%E5%BB%BAWEB%E6%9C%8D%E5%8A%A1/")}).hide();
             var canvas=qrcode.find('canvas').get(0);
             $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
         </script>
@@ -290,11 +276,11 @@
             </div>
             <div class="blog-sidebar-count blog-sidebar-padding">
                 <div class="blog-sidebar-count-left">
-                    <p class="blog-sidebar-count-p">1</p>
+                    <p class="blog-sidebar-count-p">14</p>
                     <span class="blog-sidebar-count-span">文章</span>
                 </div>
                 <div class="blog-sidebar-count-right">
-                    <p class="blog-sidebar-count-p">2</p>
+                    <p class="blog-sidebar-count-p">12</p>
                     <span class="blog-sidebar-count-span">标签</span>
                 </div>
                 <div style="clear: both;"></div>
@@ -315,12 +301,47 @@
                     
                     
                     <li class="list-group-item justify-content-between">
+                        <a href="/categories/GoLang/">GoLang</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/">Mysql</a>
+                        <span class="badge badge-default badge-pill">3</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Php/">Php</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/JavaScript/">JavaScript</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/RESTful/">RESTful</a>
+                        <span class="badge badge-default badge-pill">2</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Mysql/Json/">Json</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
+                        <a href="/categories/Windows/">Windows</a>
+                        <span class="badge badge-default badge-pill">1</span>
+                    </li>
+                    
+                    <li class="list-group-item justify-content-between">
                         <a href="/categories/hexo/">hexo</a>
                         <span class="badge badge-default badge-pill">1</span>
                     </li>
                     
                     <li class="list-group-item justify-content-between">
-                        <a href="/categories/hexo/Blog/">Blog</a>
+                        <a href="/categories/Html/">Html</a>
                         <span class="badge badge-default badge-pill">1</span>
                     </li>
                     
@@ -332,11 +353,41 @@
                 <ul class="blog-sidebar-tags-ul blog-sidebar-padding">
                     
                     
+                    <li><a href="/tags/GoLang/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="GoLang">GoLang</a></li>
+                    
+                    <li><a href="/tags/Mysql/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Mysql">Mysql</a></li>
+                    
+                    <li><a href="/tags/Php/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Php">Php</a></li>
+                    
+                    <li><a href="/tags/%E6%8A%BD%E8%B1%A1%E7%B1%BB/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="抽象类">抽象类</a></li>
+                    
+                    <li><a href="/tags/JavaScript/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="JavaScript">JavaScript</a></li>
+                    
+                    <li><a href="/tags/Js/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Js">Js</a></li>
+                    
+                    <li><a href="/tags/RESTful/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="RESTful">RESTful</a></li>
+                    
+                    <li><a href="/tags/Json/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Json">Json</a></li>
+                    
+                    <li><a href="/tags/Windows/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Windows">Windows</a></li>
+                    
                     <li><a href="/tags/Hexo/" class="tag-could" data-toggle="tooltip" data-placement="top"
                            title="Hexo">Hexo</a></li>
                     
                     <li><a href="/tags/Blog/" class="tag-could" data-toggle="tooltip" data-placement="top"
                            title="Blog">Blog</a></li>
+                    
+                    <li><a href="/tags/Html/" class="tag-could" data-toggle="tooltip" data-placement="top"
+                           title="Html">Html</a></li>
                     
                     
                 </ul>

@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no", user-scalable=no">
-    <title>专注于全栈开发Force's Blog</title>
+    <title>php执行shell不阻塞方法Force's Blog</title>
     <link rel="shortcut icon" href="/images/favicon.ico">
     
     
@@ -108,221 +108,160 @@
                 </nav>
             </header>
             
-<div class="blog-main-post">
-    <div class="index-post-br"></div>
+<header class="blog-post-page-title">
+    <h4>php执行shell不阻塞方法</h4>
+    <time datetime="2020-04-20T06:46:33.000Z"><i class="fa fa-clock-o"></i>2020-04-20</time>
     
-
-
-<article class="blog-post-block">
     
-
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/WINDOWS 开源 ASP.NET CORE/">WINDOWS 开源 ASP.NET CORE</a>
+    
+    
+	
+        <span><i class="fa fa-folder-o"></i>
+    		
+    	       <a href="/categories/Php/" rel="categories" data-toggle="tooltip" data-placement="top" title="Linux">Php</a>
+    		
+        </span>
+	
+    
+</header>
+<div class="blog-main-post blog-post-page-box">
+    <article class="blog-post-block blog-post-page-content">
         <section>
             
-            
-            .NET Core Guide.NET Core&nbsp;is an&nbsp;open-source&nbsp;general-purpose development platform maintained by Microsoft and the .NE
-            ...
+                <p>大家都知道php执行系统命令的方法有：<br>system() 输出并返回最后一行shell结果。<br>exec() 不输出结果，返回最后一行shell结果，所有结果可以保存到一个返回的数组里面。<br>passthru() 只调用命令，把命令的运行结果原样地直接输出到标准输出设备上。</p>
+<p>这些方法都会等待命令执行完毕后才会继续执行后续的程序<br>不阻塞可以将命令输出的内容写入系统的一个回收站文件，这样程序就不会阻塞<br>例如：</p>
+<p>shell_exec(“/use/local/php/bin/php /www/t.php  &gt; /dev/null 2&gt;&amp;1 &amp;”);<br>shell中可能经常能看到：&gt;/dev/null 2&gt;&amp;1</p>
+<p>命令的结果可以通过%&gt;的形式来定义输出</p>
+<p>/dev/null 代表空设备文件</p>
+<p>代表重定向到哪里，例如：echo “123” &gt; /home/123.txt<br>1 表示stdout标准输出，系统默认值是1，所以”&gt;/dev/null”等同于”1&gt;/dev/null”<br>2 表示stderr标准错误<br>&amp; 表示等同于的意思，2&gt;&amp;1，表示2的输出重定向等同于1</p>
+<p>那么本文标题的语句：<br>1&gt;/dev/null 首先表示标准输出重定向到空设备文件，也就是不输出任何信息到终端，说白了就是不显示任何信息。<br>2&gt;&amp;1 接着，标准错误输出重定向等同于 标准输出，因为之前标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</p>
+
             
         </section>
-        <footer>
-            
-            <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/Windows/" itemprop="url" rel="index">
-                Windows
-              </a>
-            
-          </span>
-            
+        <footer class="blog-post-page-tags">
+        
+			
+				
+			<a href="/tags/Php/" rel="tag" data-toggle="tooltip" data-placement="top" title="Linux">Php</a>
+				
+			
+		
         </footer>
-    </div>
-</article>
+    </article>
+    <article class="blog-post-page-readmore">
+    	
+    	
+		
 
+		
+		
+			<a href="/2020/04/09/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%89%88%E6%9C%AC%E5%90%84%E9%98%B6%E6%AE%B5/" class="blog-post-page-readmore-next" data-toggle="tooltip" data-placement="top" title="软件开发版本各阶段">下一篇</a>
+		
 
-<article class="blog-post-block">
-    
+        <div style="clear: both;"></div>
+    </article>
 
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/RESTful 架构详解/">RESTful 架构详解</a>
-        <section>
+    <article class="blog-post-block blog-post-page-content">
+            <div class="row">
             
-            
-            1. 什么是RESTREST全称是Representational State Transfer，中文意思是表述（编者注：通常译为表征）性状态转移。 它首次出现在2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范的主要编写者
-            ...
-            
-        </section>
-        <footer>
-            
-            <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/RESTful/" itemprop="url" rel="index">
-                RESTful
-              </a>
-            
-          </span>
-            
-        </footer>
-    </div>
-</article>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-donate-content">
+                        <span id="post-donate-btn" class="btn btn-danger btn-block" data-toggle="tooltip" data-placement="top" title="如果您觉得本文还不错或者对您有帮助，可以考虑打赏一下作者哦">打赏本文</span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-sm-4 post-page-more-btn">
+                    <span  data-toggle="modal" data-target="#post-qrcode-content">
+                        <span><span id="post-qrcode-btn" class="btn btn-success btn-block" data-toggle="tooltip" data-placement="top" title="微信扫描二维码手机端查看本文及分享本文">二维码</span></span>
+                    </span>
+                </div>
+            </div>
+        <div class="post-more-function-br"></div>
 
-
-<article class="blog-post-block">
-    
-
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/初学goLang搭建WEB服务/">初学goLang搭建WEB服务</a>
-        <section>
-            
-            
-            package mainimport (    "fmt"    "net/http"    "strings"    "log")func sayhelloName(w http.ResponseWriter, r *http.Request) {    r
-            ...
-            
-        </section>
-        <footer>
-            
-            <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/GoLang/" itemprop="url" rel="index">
-                GoLang
-              </a>
-            
-          </span>
-            
-        </footer>
-    </div>
-</article>
-
-
-<article class="blog-post-block">
-    
-
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/网页头部的声明应该是用 lang=”zh” 还是 lang=”zh-cn”？/">网页头部的声明应该是用 lang=”zh” 还是 lang=”zh-cn”？</a>
-        <section>
-            
-            
-            Ple“zh”是中文，代表的是宏语言（Macrolanguage），单独使用表示“中文”整体，可以是方言、文言文、简体、繁体等单独一种，也可以是任意组合的混合内容。“zh-CN”理论上表示的是“中文 (中国大陆)”，因为中国大陆的官方语言是“普通话 (简体)”
-            ...
-            
-        </section>
-        <footer>
-            
-            <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/Html/" itemprop="url" rel="index">
-                Html
-              </a>
-            
-          </span>
-            
-        </footer>
-    </div>
-</article>
-
-
-<article class="blog-post-block">
-    
-
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/go map详细使用方法/">go map详细使用方法</a>
-        <section>
-            
-            
-            Plea现在基本上所有的编程语言都有自带的map，或者dict，主要提供一个快速的查找，插入，删除，具备与存储体量无关的O（1）的性能，并且支持key上面的唯一性，比如java里的HashMap，python里的Dictionary，scala里的各种Map等
-            ...
-            
-        </section>
-        <footer>
-            
-            <time datetime="2020-02-02T09:17:59.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/GoLang/" itemprop="url" rel="index">
-                GoLang
-              </a>
-            
-          </span>
-            
-        </footer>
-    </div>
-</article>
-
-
-<article class="blog-post-block">
-    
-    <header>
-        <div class="blog-post-block-img">
-            <img src="/images/article/202002/WX20200202-164111@2x.png" alt="">
+        <div class="modal fade" id="post-donate-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">打赏本文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-donate-content">
+                            <div class="col-md-4">
+                                <p>支付宝</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/alipay.jpeg"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>微信</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/wechatpay.png"/>
+                            </div>
+                            <div class="col-md-4">
+                                <p>财付通</p>
+                                <img class="post-donate-content-img no-lightbox" src="/images/qqpay.png"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
+
+        <div class="modal fade" id="post-qrcode-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">文章二维码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row post-qrcode-content">
+                            <span class="post-qrcode-content-canvas"></span>
+                            <img class="post-qrcode-content-img no-lightbox" src=""/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // post QRcode
+            // 中文转码
+            function toUtf8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
+            }
+            // 生成
+            var qrcode= $('.post-qrcode-content-canvas').qrcode({width: 150,height: 150,text: toUtf8("http://easybhu.cn/2020/04/20/php%E6%89%A7%E8%A1%8Cshell%E4%B8%8D%E9%98%BB%E5%A1%9E%E6%96%B9%E6%B3%95/")}).hide();
+            var canvas=qrcode.find('canvas').get(0);
+            $('.post-qrcode-content-img').attr('src',canvas.toDataURL('image/jpg'));
+        </script>
+
+        
+    </article>
     
-
-    <div class="blog-post-block-padding">
-        <a href="/2020/02/02/hello-world/">Hexo 博客快速建立及部署</a>
-        <section>
-            
-            
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can
-            ...
-            
-        </section>
-        <footer>
-            
-            <time datetime="2020-02-01T16:00:00.000Z"><i class="fa fa-clock-o"></i>2020-02-02</time>
-            
-            
-            
-            
-            
-            <span><i class="fa fa-folder-o"></i>
-            
-              <a href="/categories/hexo/" itemprop="url" rel="index">
-                hexo
-              </a>
-            
-          </span>
-            
-        </footer>
-    </div>
-</article>
-
-
-
-    
-    <nav id="pagination" class="blog-pagination">
-        <a class="extend prev" rel="prev" href="/">&lt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
-
 </div>
 
             
